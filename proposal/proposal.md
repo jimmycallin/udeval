@@ -1,7 +1,8 @@
 % A better evaluation scheme for \
   multilingual parsing 
 % Jimmy Callin
-% October 2015
+
+# Purpose and aims
 
 The role of language processing is becoming increasingly multi-lingual, which  is reflected in recent efforts into providing dependency parsing frameworks that can reliably be applied on an multitude of languages. One of the most ambitious projects in this area is called Universal Dependencies (UD) [@nivre_towards_2015], where the goal is to create a parsing framework with a cross-linguistically consistent grammatical annotation. The goal is to remove the requirement of language specific components which has up to this point been a necessity because of inconsistent annotation standards. 
 
@@ -32,13 +33,13 @@ __The purpose of this project is to answer the following questions:__
 
 By studying these topics, we aim to develop and implement a new evaluation scheme that is better suited for cross-linguistic evaluation.
 
-## Related work
+## Survey of the field
 
 Data-driven evaluation metrics have been used as long as treebanks have been available (see @collins_head-driven_1999 chap. 4 for a survey on early results). These mainly used unlabeled precision, recall, and accuracy for evaluation, where _accuracy_ is equivalent to UAS. The earliest mention of (unlabeled) attachment score we could find was in @eisner_empirical_1997, which refers to work done by @lin_dependency-based_1995. Introducing labeled attachment score is credited to @nivre_memory-based_2004. @carroll_parser_1998 go deeper into parser evaluation methodologies and give a thorough overview of available metrics each with their pros and cons. 
 
 Not much work has been done in cross-linguistic evaluation, and papers presenting evaluation scores on several languages simply use previously available metrics without analyzing their shortcomings in such a context.  In light of recent work on cross-linguistically consistent annotation frameworks, @tsarfaty_evaluating_2011 take a separate approach with cross-framework evaluation, where they suggest an evaluation technique that is robust towards differing annotation criteria. Before UD was publicly available, there have been several attempts at automatic normalization of dependency treebanks into a common format for a more robust evaluation [@zeman_hamledt_2012]. 
 
-## Methodology
+## Programme description
 
 We expect the work to be concluded and sent in for review before December 11. This is the expected time plan:
 
@@ -52,17 +53,9 @@ We expect the work to be concluded and sent in for review before December 11. Th
 
 Further potential experiments, if time allows, include analyzing the effect on performance when varying the amount of training data. Previous experiments have shown weak correlation between data size and performance, which could potentially be explained by not taking into account the relative ease of identifying function word relations. 
 
-While we expect the final evaluation scheme to be similar in algorithmic design to the widely used attachment scores, we still want to emphasize what we believe to be essential qualities to keep in mind when developing new metrics:
-
-- _Keep it intuitive_ -- Evaluation should as little as possible be a black box of magic. If researchers feel like they easily can get an intuitive understanding of its process as well as its output, there is a much higher chance of the metric to get widely adopted. 
-- _Keep it interpretable_ -- While an evaluation score is best understood in the context of competing systems, it should ideally be possible to adapt it for getting a deeper understanding of one's system.
-
-We hope to adhere to these qualities in our project.
 
 ## Significance
 
 We have expressed what problems we see with current evaluation schemes when it comes to cross-lingual evaluation of dependency parsing. Through this project we plan to shed light on these issues, as well as present a viable alternative evaluation scheme that could potentially be adopted in a wider setting.
-
-\pagebreak
 
 # References
