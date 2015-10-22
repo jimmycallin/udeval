@@ -49,7 +49,7 @@ We expect the work to be concluded and sent in for review before December 11. Th
 
 3. Implement and use the evaluation metric for analysis on an appropriate parser with a suitable number of different languages. We expect the performance gap of analytic languages such as English to drop when compared to more agglutinative languages such as Turkish or Finnish. (2 weeks)
 
-5. Compile results and write paper. After passing review, an implementation of the evaluation scheme will be made openly available online. (1 week)
+4. Compile results and write paper. After passing review, an implementation of the evaluation scheme will be made openly available online. (1 week)
 
 Further potential experiments, if time allows, include analyzing the effect on performance when varying the amount of training data. Previous experiments have shown weak correlation between data size and performance, which could potentially be explained by not taking into account the relative ease of identifying function word relations. 
 
