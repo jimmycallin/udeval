@@ -1,0 +1,87 @@
+%
+% File acl2012.template.tex
+% A Pandoc template file made from TACL TeX guidelines:
+% https://tacl2013.cs.columbia.edu/ojs/index.php/tacl/about/submissions
+%
+% Original format file:
+% Contact: Maggie Li (cswjli@comp.polyu.edu.hk), Michael White (mwhite@ling.osu.edu)
+%%
+%% Based on the style files for ACL2008 by Joakim Nivre and Noah Smith
+%% and that of ACL2010 by Jing-Shin Chang and Philipp Koehn
+%%
+
+
+\documentclass[11pt]{article}
+\usepackage{acl2012}
+\usepackage{times}
+\usepackage{latexsym}
+\usepackage{amsmath}
+\usepackage{multirow}
+\usepackage{url}
+
+% Breaking URL workaround By Oscar Täckström (see submission page linked above)
+\makeatletter
+\newcommand{\@BIBLABEL}{\@emptybiblabel}
+\newcommand{\@emptybiblabel}[1]{}
+\makeatother
+\usepackage[hidelinks]{hyperref}
+
+\DeclareMathOperator*{\argmax}{arg\,max}
+\setlength\titlebox{6.5cm}    % Expanding the titlebox
+
+$if(natbib)$
+\usepackage{natbib}
+\bibliographystyle{$if(biblio-style)$$biblio-style$$else$plainnat$endif$}
+$endif$
+$if(biblatex)$
+\usepackage{biblatex}
+$for(bibliography)$
+\addbibresource{$bibliography$}
+$endfor$
+$endif$
+
+\title{$title$}
+
+
+\author{$for(author)$
+           $if(author.name)$$author.name$$endif$ \\
+           $if(author.affiliation)$$author.affiliation$$endif$ \\
+           $if(author.email)${\tt $author.email$}$endif$
+           $sep$ \and
+        $endfor$}
+
+
+\date{$date$}
+
+\begin{document}
+
+$if(title)$\maketitle$endif$
+
+$if(abstract)$
+\begin{abstract}
+    $abstract$
+\end{abstract}
+$endif$
+
+$body$
+
+$if(natbib)$
+$if(bibliography)$
+$if(biblio-title)$
+$if(book-class)$
+\renewcommand\bibname{$biblio-title$}
+$else$
+\renewcommand\refname{$biblio-title$}
+$endif$
+$endif$
+
+\bibliography{$for(bibliography)$$bibliography$$sep$,$endfor$}
+
+$endif$
+$endif$
+$if(biblatex)$
+\printbibliography$if(biblio-title)$[title=$biblio-title$]$endif$
+
+$endif$
+
+\end{document}
