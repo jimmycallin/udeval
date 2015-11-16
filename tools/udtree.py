@@ -87,7 +87,7 @@ def conllu_to_sentence_structure(conllu_tree):
 
 class UDTree:
     def __init__(self, conllu_tree):
-        self.raw = conllu_tree
+        self.raw = list(conllu_tree)
         sentence_structure = conllu_to_sentence_structure(self.raw)
         self.metadata = [w["metadata"] for w in sentence_structure
                          if "metadata" in w]
@@ -97,6 +97,22 @@ class UDTree:
 
     def verify_tree_structure(self):
         raise NotImplementedError("Todo")
+
+    @property
+    def ids(self):
+        return [w["id"] for w in self.sentence_structure]
+
+    @property
+    def lemmas(self):
+        return [w["lemma"] for w in self.sentence_structure]
+
+    @property
+    def cpostags(self):
+        return [w["cpostag"] for w in self.sentence_structure]
+
+    @property
+    def postags(self):
+        return [w["postag"] for w in self.sentence_structure]
 
     @property
     def words(self):
@@ -124,16 +140,34 @@ class UDTree:
         return [w["deprel"] for w in self.sentence_structure]
 
     @property
+    def feats(self):
+        return [w["feats"] for w in self.sentence_structure]
+
+    @property
     def heads(self):
         return [w["head"] for w in self.sentence_structure]
 
     @property
-    def conllu_format(self):
-        return self.raw
+    def deps(self):
+        return [w["deps"] for w in self.sentence_structure]
 
     @property
-    def conllx_format(self):
-        raise NotImplementedError("Todo")
+    def miscs(self):
+        return [w["misc"] for w in self.sentence_structure]
+
+    def to_conllu_format(self):
+        return self.raw
+
+    def to_conllx_format(self):
+        columns = zip(self.ids, self.words, self.lemmas, self.cpostags, self.postags,
+                      self.feats, self.heads, self.deprels, self.deps, self.miscs)
+        str_repr = []
+        for colvalues in columns:
+            colvalues = list(colvalues)
+            colvalues[5] = "|".join([param + "=" + val for param, val in colvalues[5].items()])
+            colvalues = ["_" if val is None or val == "" else val for val in colvalues]
+            str_repr.append("{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}".format(*colvalues))
+        return str_repr
 
     def __str__(self):
         return "UDTree{\n\t" + str(self.words) + "\n\t" + str(self.deprels) + "\n}"
@@ -157,6 +191,9 @@ def to_trees(f):
             continue
 
         tree.append(line)
+
+    if len(tree) > 0: # Collect the last stuff
+        yield UDTree(tree)
 
 
 def from_files(conllu_path):
