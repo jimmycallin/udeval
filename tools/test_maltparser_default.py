@@ -37,9 +37,9 @@ mode = ["-m", "parse"]
 for lang, test_file in train_files.items():
     # Get language's parsing model
     model_path = ["-c", "ud-1.1." + lang]
-    copyfile(join(project_base, "resources", "maltparser_models", "ud-1.1", model_path[1] + ".mco"), model_path[1] + ".mco")
+    copyfile(join(project_base, "resources", "maltdefault_models", "ud-1.1", model_path[1] + ".mco"), model_path[1] + ".mco")
     test_path = ["-i", join(project_base, "resources", "universaldependencies1-1", "ud-treebanks-v1.1", lang, test_file)]
-    output_path = ["-o", join(project_base, "resources", "maltparser_output", lang + ".conllx")]
+    output_path = ["-o", join(project_base, "resources", "maltdefault_output", lang + ".conllx")]
     call(base_cmd + jar_path + model_path + mode + test_path + output_path)
     remove(model_path[1] + ".mco")
 
