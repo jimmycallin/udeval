@@ -114,6 +114,11 @@ class UDTree:
     def postags(self):
         return [w["postag"] for w in self.sentence_structure]
 
+    @postags.setter
+    def postags(self, vals):
+        for w, val in zip(self.sentence_structure, vals):
+            w["postag"] = val
+
     @property
     def words(self):
         return [w["word"] for w in self.sentence_structure]
