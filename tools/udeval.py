@@ -58,7 +58,6 @@ def labels_precision_recall(system_output_path,
         for _, system_label, _, gold_label in tree_incorrect:
             if gold_label in labels:
                 gold_count += 1
-            if system_label in labels:
                 system_incorrect += 1
 
     if (gold_count) == 0:
