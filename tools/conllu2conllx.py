@@ -9,8 +9,7 @@ def convert(to_convert_files):
         trees = udtree.from_files([join(project_base, lang, path) for path in files])
         with open (outfile, "w") as w:
             for tree in trees:
-                if not any(tree.postags):
-                    print("Found for {}".format(lang))
+                if not any(tree.postags):  # Copy CPOSTAG to POSTAG
                     tree.postags = tree.cpostags
                 w.write("\n".join(tree.to_conllx_format()) + "\n\n")
 
@@ -37,6 +36,26 @@ train_files = {'UD_Basque': ['eu-ud-train.conllu'],
                'UD_Italian': ['it-ud-train.conllu'],
                'UD_Spanish': ['es-ud-train.conllu']}
 
+dev_files = {'UD_Basque': ['eu-ud-dev.conllu'],
+               'UD_Croatian': ['hr-ud-dev.conllu'],
+               'UD_Danish': ['da-ud-dev.conllu'],
+               'UD_Finnish': ['fi-ud-dev.conllu'],
+               'UD_French': ['fr-ud-dev.conllu'],
+               'UD_Greek': ['el-ud-dev.conllu'],
+               'UD_Hungarian': ['hu-ud-dev.conllu'],
+               'UD_Irish': ['ga-ud-dev.conllu'],
+               'UD_Persian': ['fa-ud-dev.conllu'],
+               'UD_Swedish': ['sv-ud-dev.conllu'],
+               'UD_Bulgarian': ['bg-ud-dev.conllu'],
+               'UD_Czech': ['cs-ud-dev.conllu'],
+               'UD_English': ['en-ud-dev.conllu'],
+               'UD_Finnish-FTB': ['fi_ftb-ud-dev.conllu'],
+               'UD_German': ['de-ud-dev.conllu'],
+               'UD_Hebrew': ['he-ud-dev.conllu'],
+               'UD_Indonesian': ['id-ud-dev.conllu'],
+               'UD_Italian': ['it-ud-dev.conllu'],
+               'UD_Spanish': ['es-ud-dev.conllu']}
+
 test_files = {'UD_Basque': ['eu-ud-test.conllu'],
                'UD_Croatian': ['hr-ud-test.conllu'],
                'UD_Danish': ['da-ud-test.conllu'],
@@ -58,4 +77,5 @@ test_files = {'UD_Basque': ['eu-ud-test.conllu'],
                'UD_Spanish': ['es-ud-test.conllu']}
 
 convert(train_files)
+convert(dev_files)
 convert(test_files)
