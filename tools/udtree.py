@@ -163,14 +163,18 @@ class UDTree:
     def to_conllu_format(self):
         return self.raw
 
-    def to_conllx_format(self):
+    def to_conllx_format(self, fine_grained_deprels=True):
         columns = zip(self.ids, self.words, self.lemmas, self.cpostags, self.postags,
                       self.feats, self.heads, self.deprels, self.deps, self.miscs)
         str_repr = []
         for colvalues in columns:
             colvalues = list(colvalues)
+            # reformat features into correct format
             colvalues[5] = "|".join([param + "=" + val for param, val in colvalues[5].items()])
+            # all None values should be outputted as "_"
             colvalues = ["_" if val is None or val == "" else val for val in colvalues]
+            if not fine_grained_deprels:  # if coarse grained, remove r":.*"
+                colvalues[7] = colvalues[7].split(":")[0]
             str_repr.append("{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}".format(*colvalues))
         return str_repr
 

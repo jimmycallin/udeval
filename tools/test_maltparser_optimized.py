@@ -5,25 +5,25 @@ from os.path import join
 from os import remove
 from shutil import copyfile
 
-train_files = {'UD_Basque': 'eu-ud-test.conllx',
-               'UD_Croatian': 'hr-ud-test.conllx',
-               'UD_Danish': 'da-ud-test.conllx',
-               'UD_Finnish': 'fi-ud-test.conllx',
-               'UD_French': 'fr-ud-test.conllx',
-               'UD_Greek': 'el-ud-test.conllx',
-               'UD_Hungarian': 'hu-ud-test.conllx',
-               'UD_Irish': 'ga-ud-test.conllx',
-               'UD_Persian': 'fa-ud-test.conllx',
-               'UD_Swedish': 'sv-ud-test.conllx',
-               'UD_Bulgarian': 'bg-ud-test.conllx',
-               'UD_Czech': 'cs-ud-test.conllx',
-               'UD_English': 'en-ud-test.conllx',
-               'UD_Finnish-FTB': 'fi_ftb-ud-test.conllx',
-               'UD_German': 'de-ud-test.conllx',
-               'UD_Hebrew': 'he-ud-test.conllx',
-               'UD_Indonesian': 'id-ud-test.conllx',
-               'UD_Italian': 'it-ud-test.conllx',
-               'UD_Spanish': 'es-ud-test.conllx'}
+test_files = {'UD_Basque': 'eu-ud-dev.conllx',
+               'UD_Croatian': 'hr-ud-dev.conllx',
+               'UD_Danish': 'da-ud-dev.conllx',
+               'UD_Finnish': 'fi-ud-dev.conllx',
+               'UD_French': 'fr-ud-dev.conllx',
+               'UD_Greek': 'el-ud-dev.conllx',
+               'UD_Hungarian': 'hu-ud-dev.conllx',
+               'UD_Irish': 'ga-ud-dev.conllx',
+               'UD_Persian': 'fa-ud-dev.conllx',
+               'UD_Swedish': 'sv-ud-dev.conllx',
+               'UD_Bulgarian': 'bg-ud-dev.conllx',
+               'UD_Czech': 'cs-ud-dev.conllx',
+               'UD_English': 'en-ud-dev.conllx',
+               'UD_Finnish-FTB': 'fi_ftb-ud-dev.conllx',
+               'UD_German': 'de-ud-dev.conllx',
+               'UD_Hebrew': 'he-ud-dev.conllx',
+               'UD_Indonesian': 'id-ud-dev.conllx',
+               'UD_Italian': 'it-ud-dev.conllx',
+               'UD_Spanish': 'es-ud-dev.conllx'}
 
 project_base = "/Users/jimmy/dev/edu/nlp-rod/udeval/"
 
@@ -34,7 +34,7 @@ base_cmd = ["java", "-Xmx8G"]
 jar_path = ["-jar", maltparser_path]
 mode = ["-m", "parse"]
 
-for lang, test_file in train_files.items():
+for lang, test_file in test_files.items():
     # Get language's parsing model
     model_path = ["-c", "ud-1.1." + lang]
     copyfile(join(project_base, "resources", "maltopt_models", model_path[1] + ".mco"), model_path[1] + ".mco")

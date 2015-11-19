@@ -1,7 +1,7 @@
 import udtree
 
 
-def match_tree_attachments(system_tree, gold_tree, labeled=False):
+def match_tree_attachments(system_tree, gold_tree, labeled=False, fine_grained_labels=True):
     correct, incorrect = [], []
     total = 0
     for (system_head,
@@ -11,7 +11,10 @@ def match_tree_attachments(system_tree, gold_tree, labeled=False):
                             system_tree.deprels,
                             gold_tree.heads,
                             gold_tree.deprels):
-        gold_label = gold_label.split(":")[0]
+
+        if not fine_grained_labels:
+            gold_label = gold_label.split(":")[0]
+            system_label = system_label.split(":")[0]
 
         is_correct = False
         if system_head == gold_head:
@@ -33,6 +36,8 @@ def attachment_score(system_output_path, gold_path, labeled=False):
     for system_tree, gold_tree in zip(system, gold):
         (tree_correct,
          tree_incorrect) = match_tree_attachments(system_tree, gold_tree, labeled)
+        print("Correct: {} \n".format(tree_correct))
+        print("Incorrect: {}".format(tree_incorrect))
         correct += len(tree_correct)
         incorrect += len(tree_incorrect)
 
