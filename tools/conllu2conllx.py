@@ -1,17 +1,31 @@
 import udtree
 from os.path import join
 
+# change this if you only want coarse grained dependency relations
+fine_grained_deprels = False
+
 project_base = "/Users/jimmy/dev/edu/nlp-rod/udeval/resources/universaldependencies1-1/ud-treebanks-v1.1"
 
 def convert(to_convert_files):
     for lang, files in to_convert_files.items():
-        outfile = join(project_base, lang, files[0].split(".")[0] + ".conllx")
+        file_ending = ".conllx"
+        if not fine_grained_deprels:
+            file_ending = ".coarse_deprels.conllx"
+        if lang == "UD_Czech" and len(files) > 1:
+            file_name = "cs-ud-train" + file_ending
+        else:
+            file_name = files[0].split(".")[0] + file_ending
+
+        outfile = join(project_base, lang, file_name)
         trees = udtree.from_files([join(project_base, lang, path) for path in files])
         with open (outfile, "w") as w:
             for tree in trees:
+                for word in tree.sentence_structure:
+                    word['deps'] = None
+                    word['misc'] = None
                 if not any(tree.postags):  # Copy CPOSTAG to POSTAG
                     tree.postags = tree.cpostags
-                w.write("\n".join(tree.to_conllx_format()) + "\n\n")
+                w.write("\n".join(tree.to_conllx_format(fine_grained_deprels=fine_grained_deprels)) + "\n\n")
 
 train_files = {'UD_Basque': ['eu-ud-train.conllu'],
                'UD_Croatian': ['hr-ud-train.conllu'],
