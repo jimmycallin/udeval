@@ -1,7 +1,7 @@
 import udtree
 
 
-def match_tree_attachments(system_tree, gold_tree, labeled=False, fine_grained_labels=True):
+def match_tree_attachments(system_tree, gold_tree, labeled=False, fine_grained_deprels=True):
     correct, incorrect = [], []
     total = 0
     for (system_head,
@@ -12,7 +12,7 @@ def match_tree_attachments(system_tree, gold_tree, labeled=False, fine_grained_l
                             gold_tree.heads,
                             gold_tree.deprels):
 
-        if not fine_grained_labels:
+        if not fine_grained_deprels:
             gold_label = gold_label.split(":")[0]
             system_label = system_label.split(":")[0]
 
@@ -29,15 +29,15 @@ def match_tree_attachments(system_tree, gold_tree, labeled=False, fine_grained_l
 
     return correct, incorrect
 
-def attachment_score(system_output_path, gold_path, labeled=False):
+def attachment_score(system_output_path, gold_path, labeled=False, fine_grained_deprels=True):
     system = udtree.from_files(system_output_path)
     gold = udtree.from_files(gold_path)
     correct, incorrect = 0, 0
     for system_tree, gold_tree in zip(system, gold):
         (tree_correct,
-         tree_incorrect) = match_tree_attachments(system_tree, gold_tree, labeled)
-        print("Correct: {} \n".format(tree_correct))
-        print("Incorrect: {}".format(tree_incorrect))
+         tree_incorrect) = match_tree_attachments(system_tree, gold_tree, labeled, fine_grained_deprels=fine_grained_deprels)
+        #print("Correct: {} \n".format(tree_correct))
+        #print("Incorrect: {}".format(tree_incorrect))
         correct += len(tree_correct)
         incorrect += len(tree_incorrect)
 
@@ -49,13 +49,14 @@ def attachment_score(system_output_path, gold_path, labeled=False):
 
 def labels_precision_recall(system_output_path,
                             gold_path,
-                            labels=["nsubj", "nsubjpass"]):
+                            labels=["nsubj", "nsubjpass"],
+                            fine_grained_deprels=True):
     system = udtree.from_files(system_output_path)
     gold = udtree.from_files(gold_path)
     system_correct, system_incorrect, gold_count = 0, 0, 0
     for system_tree, gold_tree in zip(system, gold):
         (tree_correct,
-         tree_incorrect) = match_tree_attachments(system_tree, gold_tree, True)
+         tree_incorrect) = match_tree_attachments(system_tree, gold_tree, True, fine_grained_deprels=fine_grained_deprels)
         for _, system_label, _, _ in tree_correct:
             if system_label in labels:
                 system_correct += 1
