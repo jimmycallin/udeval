@@ -1,29 +1,60 @@
 from os import listdir
 from os.path import join
 
-udname2lang = {"UD_Basque": "Basque",
-               "UD_Croatian": "Croatian",
-               "UD_Danish": "Danish",
-               "UD_Finnish": "Finnish",
-               "UD_French": "French",
-               "UD_Greek": "Greek",
-               "UD_Hungarian": "Hungarian",
-               "UD_Irish": "Irish",
-               "UD_Persian": "Persian",
-               "UD_Swedish": "Swedish",
-               "UD_Bulgarian": "Bulgarian",
-               "UD_Czech": "Czech",
-               "UD_English": "English",
-               "UD_Finnish-FTB": "Finnish-FTB",
-               "UD_German": "German",
-               "UD_Hebrew": "Hebrew",
-               "UD_Indonesian": "Indonesian",
-               "UD_Italian": "Italian",
-               "UD_Spanish": "Spanish"}
+udname2lang =  {"UD_Ancient_Greek": "Ancient_Greek",
+                "UD_Danish": "Danish",
+                "UD_German": "German",
+                "UD_Irish": "Irish",
+                "UD_Old_Church_Slavonic": "Old_Church_Slavonic",
+                "UD_Ancient_Greek-PROIEL": "Ancient_Greek-PROIEL",
+                "UD_Dutch": "Dutch",
+                "UD_Gothic": "Gothic",
+                "UD_Italian": "Italian",
+                "UD_Persian": "Persian",
+                "UD_Arabic": "Arabic",
+                "UD_English": "English",
+                "UD_Greek": "Greek",
+                "UD_Japanese-KTC": "Japanese-KTC",
+                "UD_Basque": "Basque",
+                "UD_Estonian": "Estonian",
+                "UD_Hebrew": "Hebrew",
+                "UD_Latin": "Latin",
+                "UD_Bulgarian": "Bulgarian",
+                "UD_Finnish": "Finnish",
+                "UD_Hindi": "Hindi",
+                "UD_Latin-ITT": "Latin-ITT",
+                "UD_Croatian": "Croatian",
+                "UD_Finnish-FTB": "Finnish-FTB",
+                "UD_Hungarian": "Hungarian",
+                "UD_Latin-PROIEL": "Latin-PROIEL",
+                "UD_Czech": "Czech",
+                "UD_French": "French",
+                "UD_Indonesian": "Indonesian",
+                "UD_Norwegian": "Norwegian",
+                "UD_Portuguese": "Portuguese",
+                "UD_Polish": "Polish",
+                "UD_Romanian": "Romanian",
+                "UD_Slovenian": "Slovenian",
+                "UD_Tamil": "Tamil",
+                "UD_Spanish": "Spanish",
+                "UD_Swedish": "Swedish"}
 
 lang2udname = {y: x for x,y in udname2lang.items()}
 
-lang2code = {"Basque": "eu",
+lang2code = {"Ancient_Greek": "grc",
+             "Ancient_Greek-PROIEL": "grc_proiel",
+             "Old_Church_Slavonic": "cu",
+             "Gothic": "got",
+             "Arabic": "ar",
+             "Japanese-KTC": "ja_ktc",
+             "Latin": "la",
+             "Hindi": "hi",
+             "Latin-ITT": "la_itt",
+             "Latin-PROIEL": "la_proiel",
+             "Norwegian": "no",
+             "Dutch": "nl",
+             "Estonian": "et",
+             "Basque": "eu",
              "Croatian": "hr",
              "Danish": "da",
              "Finnish": "fi",
@@ -41,7 +72,12 @@ lang2code = {"Basque": "eu",
              "Hebrew": "he",
              "Indonesian": "id",
              "Italian": "it",
-             "Spanish": "es"}
+             "Spanish": "es",
+             "Portuguese": "pt",
+             "Polish": "pl",
+             "Romanian": "ro",
+             "Slovenian": "sl",
+             "Tamil": "ta"}
 
 code2lang = {y: x for x,y in lang2code.items()}
 
@@ -50,7 +86,13 @@ def get_ud_paths(base_path, type_, format_):
     assert format_ in {'conllu', 'conllx'}
     treebanks = [tb for tb in listdir(base_path) if tb.startswith("UD_")]
     path_format = lambda tb: join(base_path, tb, "{}-ud-{}.{}".format(lang2code[udname2lang[tb]], type_, format_))
-    tb_paths = {udname2lang[lang]: path_format(lang) for lang in treebanks}
+    tb_paths = {udname2lang[lang]: [path_format(lang)] for lang in treebanks}
+    # this is such a hack, but i don't have time to do it correct right now
+    if format_ == "conllu":
+        tb_paths["Czech"] = [join(base_path, "UD_Czech", f) for f in ['cs-ud-train-c.conllu',
+                                                                      'cs-ud-train-m.conllu',
+                                                                      'cs-ud-train-v.conllu',
+                                                                      'cs-ud-train-l.conllu']]
     return tb_paths
 
 def get_system_output_paths(base_path, type_, format_):
