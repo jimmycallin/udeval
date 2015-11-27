@@ -29,13 +29,14 @@ def match_tree_attachments(system_tree, gold_tree, labeled=False, fine_grained_d
 
     return correct, incorrect
 
-def attachment_score(system_output_path, gold_path, labeled=False, fine_grained_deprels=True):
+def attachment_score(system_output_path, gold_path, labeled=True, fine_grained_deprels=True):
     system = udtree.from_files(system_output_path)
     gold = udtree.from_files(gold_path)
     correct, incorrect = 0, 0
     for system_tree, gold_tree in zip(system, gold):
         (tree_correct,
-         tree_incorrect) = match_tree_attachments(system_tree, gold_tree, labeled, fine_grained_deprels=fine_grained_deprels)
+         tree_incorrect) = match_tree_attachments(system_tree, gold_tree, labeled,
+                                                  fine_grained_deprels=fine_grained_deprels)
         #print("Correct: {} \n".format(tree_correct))
         #print("Incorrect: {}".format(tree_incorrect))
         correct += len(tree_correct)
@@ -56,7 +57,8 @@ def labels_precision_recall(system_output_path,
     system_correct, system_incorrect, gold_count = 0, 0, 0
     for system_tree, gold_tree in zip(system, gold):
         (tree_correct,
-         tree_incorrect) = match_tree_attachments(system_tree, gold_tree, True, fine_grained_deprels=fine_grained_deprels)
+         tree_incorrect) = match_tree_attachments(system_tree, gold_tree, True,
+                                                  fine_grained_deprels=fine_grained_deprels)
         for _, system_label, _, _ in tree_correct:
             if system_label in labels:
                 system_correct += 1
@@ -64,16 +66,17 @@ def labels_precision_recall(system_output_path,
         for _, system_label, _, gold_label in tree_incorrect:
             if gold_label in labels:
                 gold_count += 1
+            if system_label in labels:
                 system_incorrect += 1
 
-    if (gold_count) == 0:
+    if system_correct + system_incorrect == 0:
         precision = float("NaN")
     else:
-        precision = system_correct / gold_count
+        precision = system_correct / (system_correct + system_incorrect)
 
-    if system_correct + system_incorrect == 0:
+    if gold_count == 0:
         recall = float("NaN")
     else:
-        recall = system_correct / (system_correct + system_incorrect)
+        recall = system_correct / (gold_count)
 
     return precision, recall
