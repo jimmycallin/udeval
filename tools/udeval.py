@@ -80,3 +80,22 @@ def labels_precision_recall(system_output_path,
         recall = system_correct / (gold_count)
 
     return precision, recall
+
+def weighted_las(system_output_path, gold_path, weights):
+    system = udtree.from_files(system_output_path)
+    gold = udtree.from_files(gold_path)
+    correct, incorrect = 0, 0
+    for system_tree, gold_tree in zip(system, gold):
+        (tree_correct,
+           tree_incorrect) = match_tree_attachments(system_tree, gold_tree, True,
+                                                  fine_grained_deprels=False)
+        for _, _, _, gold_label in tree_correct:
+            correct += weights[gold_label]
+
+        for _, _, _, gold_label in tree_incorrect:
+            incorrect += weights[gold_label]
+
+    if (correct + incorrect) == 0:
+        return float("NaN")
+
+    return correct / (correct + incorrect)
