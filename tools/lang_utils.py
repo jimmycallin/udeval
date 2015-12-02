@@ -1,6 +1,11 @@
 from os import listdir
 from os.path import join
 
+ignore = {"Ancient_Greek", "German", "Ancient_Greek-PROIEL", "Estonian",
+          "Finnish-FTB", "French", "German", "Hungarian", "Indonesian",
+          "Irish", "Japanese-KTC", "Latin", "Latin-ITT", "Latin-PROIEL",
+          "Romanian", "Tamil"}
+
 udname2lang =  {"UD_Ancient_Greek": "Ancient_Greek",
                 "UD_Danish": "Danish",
                 "UD_German": "German",
@@ -77,18 +82,22 @@ lang2code = {"Ancient_Greek": "grc",
              "Polish": "pl",
              "Romanian": "ro",
              "Slovenian": "sl",
-             "Tamil": "ta"}
+             "Tamil": "ta"
+             }
 
 code2lang = {y: x for x,y in lang2code.items()}
 
-def get_ud_paths(base_path, type_, format_):
+def get_ud_paths(base_path, type_, format_, coarse):
     assert type_ in {'dev', 'train', 'test'}
     assert format_ in {'conllu', 'conllx'}
-    treebanks = [tb for tb in listdir(base_path) if tb.startswith("UD_")]
-    path_format = lambda tb: join(base_path, tb, "{}-ud-{}.{}".format(lang2code[udname2lang[tb]], type_, format_))
+    treebanks = [tb for tb in listdir(base_path) if not tb.startswith(".") and udname2lang[tb] not in ignore]
+    coarse_grained_path = ""
+    if coarse:
+        coarse_grained_path = ".coarse_deprels"
+    path_format = lambda tb: join(base_path, tb, "{}-ud-{}{}.{}".format(lang2code[udname2lang[tb]], type_, coarse_grained_path, format_))
     tb_paths = {udname2lang[lang]: [path_format(lang)] for lang in treebanks}
-    # this is such a hack, but i don't have time to do it correct right now
-    if format_ == "conllu":
+    # this is such a hack, but i don't have time to do it correctly right now
+    if format_ == "conllu" and type_ == "train":
         tb_paths["Czech"] = [join(base_path, "UD_Czech", f) for f in ['cs-ud-train-c.conllu',
                                                                       'cs-ud-train-m.conllu',
                                                                       'cs-ud-train-v.conllu',
@@ -98,5 +107,5 @@ def get_ud_paths(base_path, type_, format_):
 def get_system_output_paths(base_path, type_, format_):
     assert type_ in {'dev', 'test'}
     assert format_ in {'conllu', 'conllx'}
-    treebanks = [tb for tb in listdir(base_path) if tb.startswith("UD_") and tb.endswith(format_)]
-    return {udname2lang[lang.split(".")[0]]: join(base_path, lang) for lang in treebanks}
+    treebanks = [tb for tb in listdir(base_path) if not tb.startswith(".") and tb.endswith(format_) and tb.split(".")[0] not in ignore]
+    return {lang.split(".")[0]: join(base_path, lang) for lang in treebanks}
