@@ -3,7 +3,7 @@ from os.path import join
 import lang_utils
 
 # change this if you only want coarse grained dependency relations
-fine_grained_deprels = True
+fine_grained_deprels = False
 
 project_base = "/Users/jimmy/dev/edu/nlp-rod/udeval/resources/universaldependencies1-2/universal-dependencies-1.2/"
 
