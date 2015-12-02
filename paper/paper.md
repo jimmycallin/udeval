@@ -108,7 +108,7 @@ We chose to remove some relations where we cannot make assumptions of its conten
 
 ## Placing dependency relations on a function--content spectrum
 
-Next question to answer is if we can motivate our classification not only on linguistic intuition and the specification of dependency relations, but also from an empirical perspective. We do this by adhering to our previous definition on function dependencies, and what we know of the nature of function words. Since they are part of closed word classes, meaning new words rarely are introduced into its category, we can expect the number of distinct word types to be quite small, especially when compared to the word classes shared by typical content words such as \emph{nsubj}. 
+Next question to answer is if we can motivate our classification not only on linguistic intuition and the specification of dependency relations, but also from an empirical perspective. We do this by adhering to our previous definition on function dependencies, and what we know of the nature of function words. Since they are part of closed word classes, meaning new words rarely are introduced into their categories, we can expect the number of distinct word types to be quite small, especially when compared to the word classes shared by typical content words such as \emph{nsubj}. 
 
 \begin{figure}[t]
 \centering
