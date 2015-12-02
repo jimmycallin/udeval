@@ -11,8 +11,7 @@ from os import rename
 import lang_utils
 
 treebank_base = "/Users/jimmy/dev/edu/nlp-rod/udeval/resources/universaldependencies1-2/universal-dependencies-1.2/"
-train_files = lang_utils.get_ud_paths(treebank_base, type_="train", format_="conllx")
-train_files = {"Czech": train_files['Czech']}
+train_files = lang_utils.get_ud_paths(treebank_base, type_="train", format_="conllx", coarse=True)
 project_base = "/Users/jimmy/dev/edu/nlp-rod/udeval/"
 
 maltparser_path = join(project_base, "tools",
@@ -30,6 +29,6 @@ for lang, train_file in train_files.items():
     call(base_cmd + jar_path + ["-grl", "root"] + model_path + mode + training_path)
 
     # Move model file to resources
-    rename(model_path[1] + ".mco", join(project_base, "resources", "maltdefault_models_1-2", model_path[1] + ".mco"))
+    rename(model_path[1] + ".mco", join(project_base, "resources", "maltdefault_coarse_models_1-2", model_path[1] + ".mco"))
 
 # java -jar maltparser-1.8.1.jar -c es-model -m learn -i ../../resources/universaldependencies1-1/ud-treebanks-v1.1/UD_Spanish/es-ud-dev.conllx
