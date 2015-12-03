@@ -30,6 +30,7 @@
 \setlength\titlebox{6.5cm}    % Expanding the titlebox
 
 % Custom packages by Jimmy Callin
+\usepackage[czech,english]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{csvsimple}
 \usepackage{pgf}
@@ -85,9 +86,9 @@ $endif$
 
 $endif$
 $endif$
+
 $if(biblatex)$
 \printbibliography$if(biblio-title)$[title=$biblio-title$]$endif$
-
 $endif$
 
 \end{document}
