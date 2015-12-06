@@ -1,12 +1,18 @@
 ---
-title: Towards a better evaluation scheme for Universal Dependencies
+title: "Towards a better evaluation scheme for Universal Dependencies
 author:
 - name: Jimmy Callin
   affiliation: Uppsala University
   email: jimmy.callin@gmail.com
 tags: [universal dependencies, parsing, evaluation]
 abstract: |
-  Nah.
+  Todo:
+
+  - Write this abstract.
+  - Add human judgment results
+      + expand upon this in introduction and conclusion
+  - Write results section
+  - Discuss results.
 bibliography: bibliography.biblatex
 ---
 
@@ -17,16 +23,12 @@ The role of language processing is becoming increasingly multi-lingual, which  i
 Data-driven evaluation metrics have been used as long as treebanks have been available (see @collins_headdriven_1999 chap. 4 for a survey on early results). To evaluate statistical parsing models, two of the most ubiquitous evaluation metrics are Labeled Attachment Score (LAS) and Unlabeled Attachment Score (UAS).
 These have in their simplicity and intuitiveness served the research area well, but their design relies on a number of assumptions that we argue do not hold in the context of UD.
 
-Firstly, the design of attachment scores assumes that we know next to nothing about the taxonomy and design choices of the parsing framework. This has historically been necessary since there have not been a consistently adapted framework for dependency parsing across many languages. We argue that recent progress in UD has made this assumption invalid. UD has a carefully specified framework that all UD treebanks has to adapt, and we can exploit this constraint to learn more about the performance of a model.
-
-Secondly, parsing results are increasingly juxtaposed in a cross-linguistic manner, and this will likely continue with the establishment of UD. It is not uncommon to compare the output of e.g. English and Finnish under the assumption that equal evaluation scores is equivalent to equal parsing performance. The reason why this is problematic becomes apparent when studying grammatical morphemes in languages where these may be unbounded (i.e. function words) with languages where they typically are bounded on content words (i.e. affixes).
-
-
 \begin{figure}
 \begin{center}
-\begin{dependency}[theme = simple]
+\begin{dependency}
    \begin{deptext}[column sep=1em]
       Ammuin \& elefantin \& pyjamassani \& . \\
+      \emph{I\_shot} \& \emph{an\_elephant} \& \emph{in\_my\_pajamas} \& . \\
    \end{deptext}
    \deproot{1}{ROOT}
    \depedge{1}{2}{dobj}
@@ -34,40 +36,62 @@ Secondly, parsing results are increasingly juxtaposed in a cross-linguistic mann
    \depedge{1}{4}{punct}
 \end{dependency}
 
-\begin{dependency}[theme = simple]
-    \begin{deptext}[column sep=1em]
-        \emph{I\_shot} \& \emph{an\_elephant} \& \emph{in\_my\_pajamas} \& . \\
-    \end{deptext}
-\end{dependency}
 \end{center}
 \label{finnishparsing}
 \caption{Finnish dependency tree for \emph{I shot an elephant in my pajamas}. Note the edge count of Finnish being 4, while the English edge count is 8.}
 \end{figure}
 
-In figure \ref{finnishparsing}, we have a Finnish sentence with four edges, while the equivalent sentence in English requires a total of eight edges. The problem appears as soon as we introduce a parsing error into the trees: one faulty edge in the Finnish sentence would result in a performance reduction of 25%, while the same error in the English sentence only would reduce the accuracy by 12.5%. 
+Firstly, the design of attachment scores assumes that we know next to nothing about the taxonomy and design choices of the parsing framework. This has historically been necessary since there have not been a consistently adapted framework for dependency parsing across many languages. We argue that recent progress in UD has made this assumption invalid. UD has a carefully specified framework that all UD treebanks has to adapt, and we can exploit this constraint to learn more about the performance of a model.
 
-Function words are regular in their appearance, and should therefore be relatively easy for a model to parse correctly. Our hypothesis is that languages with a comparatively large number of function words, like English, receive a more or less free performance boost when using classic evaluation metrics.
+Secondly, parsing results are increasingly juxtaposed in a cross-linguistic manner, and this will likely continue with the establishment of UD. It is not uncommon to compare the output of e.g. English and Finnish under the assumption that equal evaluation scores is equivalent to equal parsing performance. The reason why this is problematic becomes apparent when studying grammatical morphemes in languages where these may be unbounded (i.e. function words) with languages where they typically are bounded on content words (i.e. affixes).
 
-We hope to contribute to these two questions:
+In figure \ref{finnishparsing}, we have a Finnish sentence with four edges, while the equivalent sentence in English requires a total of eight edges. The problem appears as soon as we introduce a parsing error into the trees: one faulty edge in the Finnish sentence would result in a performance reduction of 25%, while the same error in the English sentence only would reduce the accuracy by 12.5%. Function words are regular in their appearance, and should therefore be relatively easy for a model to parse correctly. Our hypothesis is that languages with a comparatively large number of function words, like English, receive a more or less free performance boost when using classic evaluation metrics.
 
-- How much does languages with high lexicalization of grammar particles benefit from current evaluation schemes?
+Based on these intuitions, we hope to contribute to these two questions:
+
+- How much does languages with a large number of unbounded grammatical morphemes benefit from current evaluation schemes?
 - Would focusing on correct classification of content word dependencies be a better evaluation scheme for cross-linguistic parsing performance?
 
 # Related work
 
-Not much work has been done in cross-linguistic evaluation, and papers presenting evaluation scores on several languages simply use previously available metrics without analyzing their shortcomings in such a context. Before UD was publicly available, there have been several attempts at automatic normalization of dependency treebanks into a common format for a more robust evaluation [@zeman2012hamledt]. 
+Not much work has been done in cross-linguistic evaluation, and papers presenting evaluation scores on several languages simply use previously available metrics without analyzing their shortcomings in such a context. Before UD was publicly available, there have been several attempts at automatic normalization of dependency treebanks into a common format for a more robust evaluation [@zeman2012hamledt]. In light of this work on cross-linguistically consistent annotation frameworks, @tsarfaty_evaluating_2011 take a separate approach with cross-framework evaluation, where they suggest an evaluation technique that is robust towards differing annotation criteria. 
 
-In light of recent work on cross-linguistically consistent annotation frameworks, @tsarfaty_evaluating_2011 take a separate approach with cross-framework evaluation, where they suggest an evaluation technique that is robust towards differing annotation criteria. 
+Since UAS arguably has been more popular of the two attachment scores, finding performance results on subsets of dependency relations has been difficult. In cases of extensive error analysis it is possible to find sections devoted to this [@plank_domain_2011, chapter 6.6]. There have also been work looking at specific constructions, e.g. unbounded dependency evaluation [@nivre_evaluation_2010], where they argue that some dependency relations are more critical for a parser to get right than others.
 
-@nivre_evaluation_2010 addresses the importance of a specific linguistic construction, indicating that some dependency relations are more critical for a parser to get right than others.
-
-@plank_dependency_2015 look closer at whether or not manual parsing evaluation correlate with standard dependency metrics. One of their main findings is that humans tend to consider content dependencies to be of more importance than function dependencies.
+@plank_dependency_2015 look closer at whether or not manual parsing evaluation correlate with standard dependency metrics, coming to the conclusion that none of today's established metrics are especially well correlated with human quality judgment. One of their main findings is that humans tend to consider content dependencies to be of more importance than function dependencies, which fits well with the assumptions made in this paper.
 
 # Data
 
 \begin{table}[t]
 \begin{center}
-\csvautotabular{tables/ud-treebanks.csv}
+\begin{tabular}{ll}
+\toprule
+Treebank & Token size \\
+\midrule
+Arabic & 282K \\
+Basque & 121K \\
+Bulgarian & 156K \\
+Croatian & 87K \\
+Czech & 1503K \\
+Danish & 100K \\
+Dutch & 200K \\
+English & 254K \\
+Finnish & 181K \\
+Gothic & 56K \\
+Greek & 59K \\
+Hebrew & 115K \\
+Hindi & 351K \\
+Italian & 252K \\
+Norwegian & 311K \\
+Old Church Slavonic & 57K \\
+Persian & 151K \\
+Polish & 83K \\
+Portuguese & 212K \\
+Slovenian & 140K \\
+Spanish & 423K \\
+Swedish & 96K \\
+\bottomrule 
+\end{tabular}
 \caption{Selected treebanks from the UD 1.2 treebank collection, with their token size.}
 \label{tbl:ud-treebanks}
 \end{center}
@@ -85,12 +109,25 @@ A total of 15 treebanks where removed. 5 of these had too few tokens, 4 lacked f
 
 \begin{table}[t]
 \begin{center}
-\begin{tabular}{|p{3.2cm}|p{3.2cm}|}
-\hline
-Function relations & Content relations \\
-\hline
-aux auxpass case cc cop det expl mark neg mwe & acl advcl advmod amod appos ccomp compound conj csubj csubjpass dislocated dobj iobj list name nmod nsubj nsubjpass nummod parataxis remnant root vocative xcomp \\
-\hline
+\begin{tabular}{p{3.2cm} p{3.2cm}}
+\toprule
+Function relations & Content relations \tabularnewline
+\midrule
+
+
+\begin{tabular}[t]{@{} p{3cm}}
+    \mbox{aux} \mbox{auxpass} \mbox{case} \mbox{cc} \mbox{cop} \mbox{det} \mbox{expl} \mbox{mark} \mbox{neg} \mbox{mwe} \tabularnewline
+\addlinespace[1.1cm]
+\toprule
+    Other  \tabularnewline
+\midrule
+    \mbox{list} \mbox{dep} \mbox{foreign} \mbox{reparandum}  \mbox{punct} \mbox{goeswith} \mbox{discourse} 
+\end{tabular}
+
+&
+
+   acl advcl \mbox{advmod} \mbox{amod} \mbox{appos} \mbox{ccomp} \mbox{compound} \mbox{conj} \mbox{csubj} \mbox{csubjpass} \mbox{dislocated} dobj iobj list name nmod nsubj \mbox{nsubjpass} nummod parataxis remnant root \mbox{vocative} xcomp  \\ 
+\bottomrule
 \end{tabular}
 \caption{Classification of content and function relations.}
 \label{tbl:dependency-relations}
@@ -100,7 +137,9 @@ aux auxpass case cc cop det expl mark neg mwe & acl advcl advmod amod appos ccom
 
 # Experimental setup
 
-First, we must split up the UD dependency relations into categories of function and content relations. We motivate our categorization based on the specification of universal dependency relations\footnote{\url{http://universaldependencies.github.io/docs/u/dep/index.html}}, linguistic intuition, and a newly developed statistical method. Firstly, let us define what we consider to be function and content relations:
+<<<<<<< Move parsin method model up here.
+
+First, we must split up the UD dependency relations into categories of function and content relations. We motivate our categorization based on the specification of universal dependency relations\footnote{\url{http://universaldependencies.github.io/docs/u/dep/index.html}}, linguistic intuition, and a newly developed statistical method. Before continuing, let us define what we consider to be function and content relations:
 
 - A _function relation_ is a relation that links a word with a function word.
 - A _content relation_ is a relation that links a content word with another content word.
@@ -119,7 +158,7 @@ Next question to answer is if we can motivate our classification not only on lin
 \centering
 \input{figures/inverse_word_entropy.pgf}
 \label{fig:averaged_wde}
-\caption{Averaged word entropy for all universal dependency relations, with the manually created categories.}
+\caption{Averaged word dependency entropy for all universal dependency relations, with the manually created categories.}
 \end{figure}
 
 \begin{figure}[t]
@@ -132,7 +171,7 @@ Next question to answer is if we can motivate our classification not only on lin
 
 Assuming this holds, we expect that the probability of a word given a function relation to be zero for all but a few cases, while the probability of a word given a content relation should be much more evenly spread. This can be quantified by measuring a relation's entropy given its word probabilities. We call this measure _word dependency entropy_ (WDE). Calculated for all treebanks we get the averaged WDE. 
 
-Here we formally define word entropy. A probability distribution $p$ takes as input a word $w$ conditioned on a treebank $t \in T$, and a dependency relation $r$. $H$ is the entropy function that takes $p(w|r,t)$ as input and calculates its entropy. The entropy function is normalized by its upper bound $\log n_w$, where $n_w$ is the size of the vocabulary. This keeps the range of the function to $[0,1]$. To calculate the WDE for a set of treebanks, we average WDE for all treebanks $t \in T$. In the case a dependency relation is not present in a treebank, we set its WDE to 0.5 to imply that it is neither a content nor a function relation.
+Here we formally define word dependency entropy. A probability distribution $p$ takes as input a word $w$ conditioned on a treebank $t \in T$, and a dependency relation $r$. $H$ is the entropy function that takes $p(w|r,t)$ as input and calculates its entropy. The entropy function is normalized by its upper bound $\log n_w$, where $n_w$ is the size of the vocabulary. This keeps the range of the function to $[0,1]$. To calculate the WDE for a set of treebanks, we average WDE for all treebanks $t \in T$. In the case a dependency relation is not present in a treebank, we set its WDE to 0.5 to imply that it is neither a content nor a function relation.
 
 This gives us the following mathematical functions:
 
@@ -140,7 +179,7 @@ $$\mbox{WDE}(r,t) = \dfrac{H(p(w|r,t))}{\log n_w}$$
 
 $$\mbox{Averaged WDE}(r, T) = \dfrac{1}{n_T} \sum_{t \in T}{\mbox{WDE}(r,t)}$$
 
-The averaged WDE for UD 1.2 is presented in figure \ref{fig:averaged_wde}, along with our manual categorization of dependency relations. Ignoring the _other_ relations, we find that the word entropy gives an intuitive ordering of the dependency relations, while empirically supporting our choice of content and function relations.
+The averaged WDE for UD 1.2 is presented in figure \ref{fig:averaged_wde}, along with our manual categorization of dependency relations. Ignoring the _other_ relations, we find that the WDE gives an intuitive ordering of the dependency relations, while empirically supporting our choice of content and function relations.
 
 ## Finding correlation with external measurements
 
@@ -162,25 +201,7 @@ We weight each dependency relation by its averaged WDE as presented in figure \r
 
 For testing our alternative evaluation metrics, we trained MaltParser with default settings on each treebank's training data and evaluated the parsing output of the included test data. 
 
-# Results
-
-In \ref{tbl:dependency-relations}, we list all dependency relations according to their classification as previously motivated. 
-
-\begin{figure}[t]
-\centering
-\resizebox{\columnwidth}{!}{\input{figures/function_deprel_las_ratio_corr.pgf}}
-\caption{Precision of functional dependency relations, and the frequency ratio of functional dependency relations for each language. $R=0.67$}
-\label{figure:function-parsing-ratio}
-\end{figure}
-
-\begin{figure}[t]
-\centering
-\resizebox{\columnwidth}{!}{\input{figures/content_deprel_las_ratio_corr.pgf}}
-\caption{Precision of content dependency relations, and the frequency ratio of content dependency relations for each language. $R=-0.33$}
-\label{figure:content-parsing-ratio}
-\end{figure}
-
-By studying figure \ref{figure:function-parsing-ratio}, we see that there is a clear correlation between the frequency ratio of function relations in a language with its precision of the same relation class. What is interesting is that this does not hold when looking at content relations, as seen in figure \ref{figure:content-parsing-ratio}. This suggests that languages with a high degree of function dependency relations has an unfair advantage when comparing attachment scores across languages.
+# Parsing results
 
 \begin{figure*}[t]
 \centering
@@ -188,6 +209,47 @@ By studying figure \ref{figure:function-parsing-ratio}, we see that there is a c
 \label{fig:content_las_comparison}
 \caption{Overall LAS score, precision and recall for content dependencies.}
 \end{figure*}
+
+Figure \ref{fig:content_las_comparison} lists the parsing results for all languages, with LAS, WLAS, and content precision and recall. 
+
+
+\begin{table}[t]
+\centering
+\resizebox{\columnwidth}{!}{
+    \input{tables/res_corrs.latex}
+}
+\label{tbl:res_corrs}
+\caption{Pearson correlation matrix for content and function frequency ratio, content precision and recall, function precision and recall, LAS, and WLAS. Correlation measured across languages. Boldfaced figures are mentioned in the discussion.}
+\end{table}
+
+<!-- \begin{figure}[t]
+\centering
+\resizebox{\columnwidth}{!}{\input{figures/function_ratio_vs_function_precision.pgf}}
+\caption{Precision of functional dependency relations, and the frequency ratio of functional dependency relations for each language. $R=0.67$}
+\label{figure:function-parsing-ratio}
+\end{figure}
+ -->
+
+<!-- \begin{figure}[t]
+\centering
+\resizebox{\columnwidth}{!}{\input{figures/content_deprel_las_ratio_corr.pgf}}
+\caption{Precision of content dependency relations, and the frequency ratio of content dependency relations for each language. $R=-0.33$}
+\label{figure:content-parsing-ratio}
+\end{figure}
+ -->
+
+
+__NOTES__: 
+
+
+By studying figure \ref{figure:function-parsing-ratio}, we see that there is a clear correlation between the frequency ratio of function relations in a language with its precision of the same relation class. What is interesting is that this does not hold when looking at content relations, as seen in figure \ref{figure:content-parsing-ratio}. This suggests that languages with a high degree of function dependency relations has an unfair advantage when comparing attachment scores across languages.
+
+<!-- \begin{table*}[t]
+\resizebox{\textwidth}{!}{
+    \input{tables/maltdefault_results.latex}
+}
+\caption{Overall LAS score, precision and recall for content dependencies.}
+\end{table*} -->
 
 \begin{figure}[h!]
 \centering
@@ -210,6 +272,6 @@ In this paper we have presented experiments that suggest that languages with man
 
 # Acknowledgements
 
-We thank Jörg Tiedemann for allowing us to use his parsing output on UD 1.0 for initial experiment development.
+We thank Jörg Tiedemann for providing his parsing output on UD 1.0 for initial experiment development.
 
 \section*{References}
