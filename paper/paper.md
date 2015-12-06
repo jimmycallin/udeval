@@ -1,5 +1,5 @@
 ---
-title: "Towards a better evaluation scheme for Universal Dependencies
+title: "Towards a better evaluation scheme for Universal Dependencies"
 author:
 - name: Jimmy Callin
   affiliation: Uppsala University
@@ -137,9 +137,9 @@ Function relations & Content relations \tabularnewline
 
 # Experimental setup
 
-<<<<<<< Move parsin method model up here.
+For testing our alternative evaluation metrics, we train MaltParser 1.7 using Nivre Arc-Eager with default settings on each treebank's training data and parse the included test data [@nivre2006maltparser]. We will also be using the human judgment data from @plank_dependency_2015 to see how well the evaluation metrics correlate with how well people consider the parsing output of a certain model is better than the parsing output of another model. Before continuing, we must split up the UD dependency relations into categories of function and content relations. 
 
-First, we must split up the UD dependency relations into categories of function and content relations. We motivate our categorization based on the specification of universal dependency relations\footnote{\url{http://universaldependencies.github.io/docs/u/dep/index.html}}, linguistic intuition, and a newly developed statistical method. Before continuing, let us define what we consider to be function and content relations:
+We motivate our categorization based on the specification of universal dependency relations\footnote{\url{http://universaldependencies.github.io/docs/u/dep/index.html}}, linguistic intuition, and a newly developed statistical method. First, let us define what we consider to be function and content relations:
 
 - A _function relation_ is a relation that links a word with a function word.
 - A _content relation_ is a relation that links a content word with another content word.
@@ -148,11 +148,11 @@ First, we must split up the UD dependency relations into categories of function 
 
 Given the previous definition as well as the specification of universal dependency relations, we can categorize a relation based on how it should occur in UD treebanks. Going through each dependency relation in this manner we ended up with a classification as presented in table \ref{tbl:dependency-relations}. 
 
-We chose to remove some relations where we cannot make assumptions of its content, labeled _other_. The _foreign_ relation has no restrictions of what type of word it should choose as a dependent as long as it is a foreign word. _List_ are used in cases where the content cannot be easily analyzed. _Reparandum_ and _dep_ are neither of semantic nor syntactic nature and we cannot make any assumptions of their content. _Punct_ and _discourse_ are removed for similar reasons, but also due to particles often being ignored in other evaluation schemes.
+We chose to remove some relations where we cannot make assumptions of its content, labeled _other_. The _foreign_ relation has no restrictions on what type of word it should choose as a dependent as long as it is a foreign word. _List_ are used in cases where the content cannot be easily analyzed. _Reparandum_ and _dep_ are neither of semantic nor syntactic nature and we cannot make any assumptions of their content. _Punct_ and _discourse_ are removed for similar reasons, but also due to particles often being ignored in other evaluation schemes.
 
 ## Placing dependency relations on a function--content spectrum
 
-Next question to answer is if we can motivate our classification not only on linguistic intuition and the specification of dependency relations, but also from an empirical perspective. We do this by adhering to our previous definition on function dependencies, and what we know of the nature of function words. Since they are part of closed word classes, meaning new words rarely are introduced into their categories, we can expect the number of distinct word types to be quite small, especially when compared to the word classes shared by typical content words such as _nsubj_. 
+Next question to answer is if we can motivate our classification not only on linguistic intuition and the specification of dependency relations, but also from an empirical perspective. We do this by adhering to our previous definition on function dependencies, and what we know of the nature of function words. Since they are part of closed word classes, meaning new words rarely get introduced into their categories, we can expect the number of distinct word types to be quite small, especially when compared to the word classes shared by typical content words such as _nsubj_. 
 
 \begin{figure}[t]
 \centering
@@ -189,30 +189,34 @@ We would expect the ratio of function words in a given language's treebank to co
 
 Based on the previous findings, we propose two alternative metrics to the LAS. The first metric is based on our manual classification of content and function dependencies, while the latter is exploiting the weights outputted by the WDE.
 
-### Precision and recall of content relations
+#### Precision and recall of content relations
 
 In this metric, we look at the precision and recall for all content dependency relations, ignoring any relation that is not a part of this class. Since not all dependency relations are involved, the precision and recall can differ and thus become interesting to analyze separately. We call these _content precision_ and _content recall_.
 
-### Weighting relations by their WDE
+#### Weighting relations by their WDE
 
 We weight each dependency relation by its averaged WDE as presented in figure \ref{fig:averaged_wde}. This will increase the importance of content relations, while the function relations provide less to the overall score. We call this the _Weighted Labeled Attachment Score_ (WLAS). Using WLAS has the additional interesting property of also being easily calculated and deployable to non-UD frameworks.
 
-## Testing on a parser model
-
-For testing our alternative evaluation metrics, we trained MaltParser with default settings on each treebank's training data and evaluated the parsing output of the included test data. 
-
 # Parsing results
 
+<!-- Overall las scores -->
 \begin{figure*}[t]
 \centering
 \input{figures/content_las_comparison.pgf}
 \label{fig:content_las_comparison}
-\caption{Overall LAS score, precision and recall for content dependencies.}
-\end{figure*}
-
-Figure \ref{fig:content_las_comparison} lists the parsing results for all languages, with LAS, WLAS, and content precision and recall. 
+\caption{Overall LAS, WLAS, precision and recall for content dependencies. Sorted by WLAS.}
+\end{figure*} <!-- TODO: Sort by LAS. Recalculate to make sure punct is not present. -->
 
 
+<!-- Cumulative variance -->
+\begin{figure}[t]
+\centering
+\input{figures/cumul_vars.pgf}
+\label{fig:cumul_vars}
+\caption{Cumulative variance when adding languages in a top-scoring order.}
+\end{figure}
+
+<!-- Correlation matrix -->
 \begin{table}[t]
 \centering
 \resizebox{\columnwidth}{!}{
@@ -222,41 +226,11 @@ Figure \ref{fig:content_las_comparison} lists the parsing results for all langua
 \caption{Pearson correlation matrix for content and function frequency ratio, content precision and recall, function precision and recall, LAS, and WLAS. Correlation measured across languages. Boldfaced figures are mentioned in the discussion.}
 \end{table}
 
-<!-- \begin{figure}[t]
-\centering
-\resizebox{\columnwidth}{!}{\input{figures/function_ratio_vs_function_precision.pgf}}
-\caption{Precision of functional dependency relations, and the frequency ratio of functional dependency relations for each language. $R=0.67$}
-\label{figure:function-parsing-ratio}
-\end{figure}
- -->
-
-<!-- \begin{figure}[t]
-\centering
-\resizebox{\columnwidth}{!}{\input{figures/content_deprel_las_ratio_corr.pgf}}
-\caption{Precision of content dependency relations, and the frequency ratio of content dependency relations for each language. $R=-0.33$}
-\label{figure:content-parsing-ratio}
-\end{figure}
- -->
-
-
-__NOTES__: 
-
+Figure \ref{fig:content_las_comparison} lists the parsing results for all languages, with LAS, WLAS, and content precision and recall. We can tell that WLAS is consistently providing larger scores for each output than LAS, while the content precision and recall scores are substantially lower. Despite the lower significance of functional dependencies, even including them at all gives a good performance boost for the measurment. There are small differences for precision and recall for all except the worst performing languages where,given the higher recall, the parsing model seems to have a bias towards content dependencies.
 
 By studying figure \ref{figure:function-parsing-ratio}, we see that there is a clear correlation between the frequency ratio of function relations in a language with its precision of the same relation class. What is interesting is that this does not hold when looking at content relations, as seen in figure \ref{figure:content-parsing-ratio}. This suggests that languages with a high degree of function dependency relations has an unfair advantage when comparing attachment scores across languages.
 
-<!-- \begin{table*}[t]
-\resizebox{\textwidth}{!}{
-    \input{tables/maltdefault_results.latex}
-}
-\caption{Overall LAS score, precision and recall for content dependencies.}
-\end{table*} -->
-
-\begin{figure}[h!]
-\centering
-\input{figures/cumul_vars.pgf}
-\label{fig:content_las_comparison}
-\caption{Cumulative variance when adding languages in a top-scoring order.}
-\end{figure}
+<!-- Below not finished -->
 
 Figure \ref{fig:results} shows how the variance for high performing languages has decreased, while the overall variance has not been affected when looking at the whole language spectrum. 
 
@@ -275,3 +249,26 @@ In this paper we have presented experiments that suggest that languages with man
 We thank Jörg Tiedemann for providing his parsing output on UD 1.0 for initial experiment development.
 
 \section*{References}
+
+<!-- \begin{figure}[t]
+\centering
+\resizebox{\columnwidth}{!}{\input{figures/function_ratio_vs_function_precision.pgf}}
+\caption{Precision of functional dependency relations, and the frequency ratio of functional dependency relations for each language. $R=0.67$}
+\label{figure:function-parsing-ratio}
+\end{figure}
+ -->
+
+<!-- \begin{figure}[t]
+\centering
+\resizebox{\columnwidth}{!}{\input{figures/content_deprel_las_ratio_corr.pgf}}
+\caption{Precision of content dependency relations, and the frequency ratio of content dependency relations for each language. $R=-0.33$}
+\label{figure:content-parsing-ratio}
+\end{figure}
+ -->
+
+<!-- \begin{table*}[t]
+\resizebox{\textwidth}{!}{
+    \input{tables/maltdefault_results.latex}
+}
+\caption{Overall LAS score, precision and recall for content dependencies.}
+\end{table*} -->
