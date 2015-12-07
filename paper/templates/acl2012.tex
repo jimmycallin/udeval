@@ -32,11 +32,13 @@
 % Custom packages by Jimmy Callin
 \usepackage[czech,english]{babel}
 \usepackage[utf8]{inputenc}
-\usepackage{csvsimple}
-\usepackage{pgf}
 \usepackage{tikz-dependency}
 \usepackage{booktabs}
 \usepackage{multirow}
+\usepackage{graphicx}
+% Pandoc wants this
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 
 $if(natbib)$
 \usepackage{natbib}

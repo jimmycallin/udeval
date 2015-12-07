@@ -1,5 +1,6 @@
 ---
-title: "Towards a better evaluation scheme for Universal Dependencies"
+title: "Towards better evaluation for Universal Dependencies:
+A typological perspective"
 author:
 - name: Jimmy Callin
   affiliation: Uppsala University
@@ -9,10 +10,10 @@ abstract: |
   Todo:
 
   - Write this abstract.
-  - Add human judgment results
+  - Add human judgment results (ok)
       + expand upon this in introduction and conclusion
-  - Write results section
-  - Discuss results.
+  - Eat something non-microwaved.
+  - Maybe add more references for UAS and LAS?
 bibliography: bibliography.biblatex
 ---
 
@@ -37,8 +38,8 @@ These have in their simplicity and intuitiveness served the research area well, 
 \end{dependency}
 
 \end{center}
-\label{finnishparsing}
 \caption{Finnish dependency tree for \emph{I shot an elephant in my pajamas}. Note the edge count of Finnish being 4, while the English edge count is 8.}
+\label{finnishparsing}
 \end{figure}
 
 Firstly, the design of attachment scores assumes that we know next to nothing about the taxonomy and design choices of the parsing framework. This has historically been necessary since there have not been a consistently adapted framework for dependency parsing across many languages. We argue that recent progress in UD has made this assumption invalid. UD has a carefully specified framework that all UD treebanks has to adapt, and we can exploit this constraint to learn more about the performance of a model.
@@ -104,8 +105,9 @@ We will be using a subset of the Universal Dependencies treebank 1.2 [@nivre_uni
 - They have a small ratio of non-projective trees.
 - In the case of more than one valid treebank for a language, choose the treebank with manual corrections or largest token count.
 
-A total of 15 treebanks where removed. 5 of these had too few tokens, 4 lacked features, 2 had too many non-projective trees, while 4 treebanks were language duplicates. This leaves us with the 22 languages listed in table \ref{tbl:ud-treebanks}. Most notably we lost the French and German treebanks.
+A total of 15 treebanks were removed. 5 of these had too few tokens, 4 lacked features, 2 had too many non-projective trees, while 4 treebanks were language duplicates. This leaves us with the 22 languages listed in table \ref{tbl:ud-treebanks}. Most notably we lost the French and German treebanks.
 
+For measuring the correlation of metrics to manual evaluation, we will be using parts of the human judgment data as provided by @plank_dependency_2015. Not all languages in the dataset are from the UD treebanks, thus only English, German, and Spanish are used.
 
 \begin{table}[t]
 \begin{center}
@@ -137,12 +139,12 @@ Function relations & Content relations \tabularnewline
 
 # Experimental setup
 
-For testing our alternative evaluation metrics, we train MaltParser 1.7 using Nivre Arc-Eager with default settings on each treebank's training data and parse the included test data [@nivre2006maltparser]. We will also be using the human judgment data from @plank_dependency_2015 to see how well the evaluation metrics correlate with how well people consider the parsing output of a certain model is better than the parsing output of another model. Before continuing, we must split up the UD dependency relations into categories of function and content relations. 
+For testing our alternative evaluation metrics, we train MaltParser 1.7 using Nivre Arc-Eager with default settings on each treebank's training data and parse the included test data [@nivre2006maltparser]. We will also be using the human judgment data from @plank_dependency_2015 to see how any of our proposed metrics compares against manual evaluation. Before continuing, we must split up the UD dependency relations into categories of function and content relations. 
 
 We motivate our categorization based on the specification of universal dependency relations\footnote{\url{http://universaldependencies.github.io/docs/u/dep/index.html}}, linguistic intuition, and a newly developed statistical method. First, let us define what we consider to be function and content relations:
 
 - A _function relation_ is a relation that links a word with a function word.
-- A _content relation_ is a relation that links a content word with another content word.
+- A _content relation_ is a relation that is either the root, or links a content word with another content word.
 
 ## Categorization by specification
 
@@ -156,16 +158,16 @@ Next question to answer is if we can motivate our classification not only on lin
 
 \begin{figure}[t]
 \centering
-\input{figures/inverse_word_entropy.pgf}
-\label{fig:averaged_wde}
+\includegraphics{figures/word_dependency_entropy.pdf}
 \caption{Averaged word dependency entropy for all universal dependency relations, with the manually created categories.}
+\label{fig:averaged_wde}
 \end{figure}
 
 \begin{figure}[t]
 \hspace*{-1cm}
-\input{figures/standard_ttr.pgf}
-\label{fig:standard_ttr}
+\includegraphics{figures/standard_ttr.pdf}
 \caption{Standardized type/token ratio for chunks of 1000 tokens (blue) and content dependency (green). $R=0.27$}
+\label{fig:standard_ttr}
 \end{figure}
 
 
@@ -180,6 +182,15 @@ $$\mbox{WDE}(r,t) = \dfrac{H(p(w|r,t))}{\log n_w}$$
 $$\mbox{Averaged WDE}(r, T) = \dfrac{1}{n_T} \sum_{t \in T}{\mbox{WDE}(r,t)}$$
 
 The averaged WDE for UD 1.2 is presented in figure \ref{fig:averaged_wde}, along with our manual categorization of dependency relations. Ignoring the _other_ relations, we find that the WDE gives an intuitive ordering of the dependency relations, while empirically supporting our choice of content and function relations.
+
+<!-- Overall las scores -->
+\begin{figure*}[t]
+\centering
+\includegraphics{figures/content_las_comparison.pdf}
+\caption{Overall LAS, WLAS, precision and recall for content dependencies. Sorted by LAS.}
+\label{fig:content_las_comparison}
+\end{figure*}
+
 
 ## Finding correlation with external measurements
 
@@ -197,24 +208,7 @@ In this metric, we look at the precision and recall for all content dependency r
 
 We weight each dependency relation by its averaged WDE as presented in figure \ref{fig:averaged_wde}. This will increase the importance of content relations, while the function relations provide less to the overall score. We call this the _Weighted Labeled Attachment Score_ (WLAS). Using WLAS has the additional interesting property of also being easily calculated and deployable to non-UD frameworks.
 
-# Parsing results
-
-<!-- Overall las scores -->
-\begin{figure*}[t]
-\centering
-\input{figures/content_las_comparison.pgf}
-\label{fig:content_las_comparison}
-\caption{Overall LAS, WLAS, precision and recall for content dependencies. Sorted by WLAS.}
-\end{figure*} <!-- TODO: Sort by LAS. Recalculate to make sure punct is not present. -->
-
-
-<!-- Cumulative variance -->
-\begin{figure}[t]
-\centering
-\input{figures/cumul_vars.pgf}
-\label{fig:cumul_vars}
-\caption{Cumulative variance when adding languages in a top-scoring order.}
-\end{figure}
+# Evaluation
 
 <!-- Correlation matrix -->
 \begin{table}[t]
@@ -222,23 +216,45 @@ We weight each dependency relation by its averaged WDE as presented in figure \r
 \resizebox{\columnwidth}{!}{
     \input{tables/res_corrs.latex}
 }
+\caption{Pearson correlation matrix between treebanks for content and function frequency ratio, content precision and recall, function precision and recall, LAS, and WLAS. Boldfaced figures are mentioned in the discussion.}
 \label{tbl:res_corrs}
-\caption{Pearson correlation matrix for content and function frequency ratio, content precision and recall, function precision and recall, LAS, and WLAS. Correlation measured across languages. Boldfaced figures are mentioned in the discussion.}
 \end{table}
 
-Figure \ref{fig:content_las_comparison} lists the parsing results for all languages, with LAS, WLAS, and content precision and recall. We can tell that WLAS is consistently providing larger scores for each output than LAS, while the content precision and recall scores are substantially lower. Despite the lower significance of functional dependencies, even including them at all gives a good performance boost for the measurment. There are small differences for precision and recall for all except the worst performing languages where,given the higher recall, the parsing model seems to have a bias towards content dependencies.
+<!-- Cumulative variance -->
+\begin{figure}[t]
+\centering
+\includegraphics{figures/cumul_vars.pdf}
+\caption{Cumulative variance when adding languages in a top-scoring order.}
+\label{fig:cumul_vars}
+\end{figure}
 
-By studying figure \ref{figure:function-parsing-ratio}, we see that there is a clear correlation between the frequency ratio of function relations in a language with its precision of the same relation class. What is interesting is that this does not hold when looking at content relations, as seen in figure \ref{figure:content-parsing-ratio}. This suggests that languages with a high degree of function dependency relations has an unfair advantage when comparing attachment scores across languages.
+<!-- Human judgment correlations -->
+\begin{table}[t]
+\centering
+\resizebox{\columnwidth}{!}{\input{tables/human_judgment.latex}}
+\caption{Correlations of LAS, WLAS, content precision and recall against human judgment data.}
+\label{tbl:human_judgment}
+\end{table}
 
-<!-- Below not finished -->
+Figure \ref{fig:content_las_comparison} lists the parsing results for all languages, with LAS, WLAS, and content precision and recall. We can tell that LAS is consistently providing higher scores for each output compared to WLAS, while the content precision and recall scores are substantially lower. There are small differences for precision and recall for all except the worst performing languages where, given the higher recall, the parsing model seems to have a bias towards content dependencies.
 
-Figure \ref{fig:results} shows how the variance for high performing languages has decreased, while the overall variance has not been affected when looking at the whole language spectrum. 
+Table \ref{tbl:res_corrs} lists the Pearson correlation coefficient between treebanks for WLAS, LAS, content relations precision and recall, function relations precision and recall, and the frequency ratio of content and function relations in the treebanks. The correlation between the various suggested measurements, as well as with LAS, are quite strong. The content relations frequency has a strong negative correlation with function relations frequency, and negative across all the other measurements as well. Function relations frequency shows more or less strong correlations across.
 
-One hypothesis for why we do not see a relative decrease that is correlated to their sTTR values is that the function words works better as a structure to make a better classification for the content words. 
+Figure \ref{fig:cumul_vars} shows what happens with the variance when cumulatively adding languages in a top-scoring fashion for each measurement. For content precision and recall as well as WLAS, the variance is lower for high performing languages, but takes off for content precision and recall when you get past the first eleven treebanks. WLAS keeps a lower score compared with LAS until the end where it joins LAS in a variance of 0.0045.
+
+Table \ref{tbl:human_judgment} lists Spearman correlations between manual evaluation of two parser models, where the evaluators given parsed sentences in each case chose which of two parser models they consider to provide the best output. Content precision and recall are in all cases except one inferior to LAS and WLAS, where the two latter are indistinguishable.
 
 # Discussion
 
-A natural question that comes up is whether we should use function weights as determined by the average WDE across many languages, or if it would be beneficial to let language specific WDE produce each language's weights.
+Looking at function frequency and its precision in table \ref{tbl:res_corrs}, they have a correlation of $0.67$. This suggests that the larger rate of function words in a language, the easier it is to parse its function words. What is interesting is that this does not hold when looking at content frequency and its precision where one might expect that there is a strong positive correlation which would indicate that a high degree of content relations makes it easier to parse these classes. Instead, we find a weak negative correlation of $-0.25$. Furthermore, given languages' LAS scores, the more function words there is in a language, the better it performs. Even when looking at the relation between the amount of function words in a language with how well it does on content words, the correlation is weakly positive. We take this to mean that our choice of parser, while not explicitly tuned for any particular language, still benefits from a context with a high rate of grammatical function words. These findings support our hypothesis, that languages with a high degree of function dependency relations has an unfair advantage when comparing attachment scores across languages.
+
+Regarding the evaluation scores for different evaluation metrics, as presented in \ref{fig:content_las_comparison}, it is difficult to tell if any metric is better than the other. One might expect that the scoring difference of LAS and WLAS, or LAS and content performance, would correlate with its STTR score, since languages like Hebrew and English have more to lose on decreasing the importance of function words, but unfortunately this correlation is rather weak. We believe this has to do with what we described above, that languages with a high rate of function words provide a better context for content words for parsers.
+
+We ran the measurements on the human judgment data with the results given in table \ref{tbl:human_judgment}. Unfortunately, none of the metrics seems to improve upon the LAS score, which was the top scoring metric reported in the original paper. Only content recall has some improvements over LAS for English, but other than that the results are either worse or equal to those of LAS. WLAS has overall very small changes compared to LAS, which is somewhat surprising given that the original paper commented on content relations being considered more important than function relations by the manual evaluators. This could possibly be explained by function relations overall performing quite well, and whenever there are erroneous function relations they are rather a result of already faulty content dependencies. This possible explanation is as of yet untested.
+
+Another approach is to look at the variance of the metrics. If our initial hypothesis holds, this should mean that some of the differences found between languages before evens out, and thereby lowering the variance when compared to LAS. As figure \ref{fig:cumul_vars} shows this does not hold when looking at all treebanks, but by cumulatively adding treebanks it is possible to study the effect as the performance decreases. This shows indeed that the variance is much lower among high-performing languages for WLAS and and content performance. This could potentially be explained by that differences among top-scoring can much less be explained by randomness from a poor parsing model, and it is first among these that the effects of choice of metric really matters.
+
+That brings us to the choice of parser model and its effect on the results. In the name of consistent treebanks, we chose to remove treebanks with a large number of non-projective trees. Another motivation was that our parser can not handle these types of trees especially well, and the results are thus unreliable when comparing across languages. Is is quite possible, and even probable, that there are many similar factors playing a role in the discussed results. In future work, we should reproduce these results with alternative models and look for any similarities or differences that might strengthen our claims or explain some of the peculiarities we have seen in this work.
 
 # Conclusion
 
@@ -249,26 +265,3 @@ In this paper we have presented experiments that suggest that languages with man
 We thank Jörg Tiedemann for providing his parsing output on UD 1.0 for initial experiment development.
 
 \section*{References}
-
-<!-- \begin{figure}[t]
-\centering
-\resizebox{\columnwidth}{!}{\input{figures/function_ratio_vs_function_precision.pgf}}
-\caption{Precision of functional dependency relations, and the frequency ratio of functional dependency relations for each language. $R=0.67$}
-\label{figure:function-parsing-ratio}
-\end{figure}
- -->
-
-<!-- \begin{figure}[t]
-\centering
-\resizebox{\columnwidth}{!}{\input{figures/content_deprel_las_ratio_corr.pgf}}
-\caption{Precision of content dependency relations, and the frequency ratio of content dependency relations for each language. $R=-0.33$}
-\label{figure:content-parsing-ratio}
-\end{figure}
- -->
-
-<!-- \begin{table*}[t]
-\resizebox{\textwidth}{!}{
-    \input{tables/maltdefault_results.latex}
-}
-\caption{Overall LAS score, precision and recall for content dependencies.}
-\end{table*} -->
