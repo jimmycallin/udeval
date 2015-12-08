@@ -210,6 +210,16 @@ We weight each dependency relation by its averaged WDE as presented in figure \r
 
 # Evaluation
 
+
+Figure \ref{fig:content_las_comparison} lists the parsing results for all languages, with LAS, WLAS, and content precision and recall. We can tell that LAS is consistently providing higher scores for each output compared to WLAS, while the content precision and recall scores are substantially lower. There are small differences for precision and recall for all except the worst performing languages where, given the higher recall, the parsing model seems to have a bias towards content dependencies.
+
+Table \ref{tbl:res_corrs} lists the Pearson correlation coefficient between treebanks for WLAS, LAS, content relations precision and recall, function relations precision and recall, and the frequency ratio of content and function relations in the treebanks. The correlation between the various suggested measurements, as well as with LAS, are quite strong. The content relations frequency has a strong negative correlation with function relations frequency, and negative across all the other measurements as well. Function relations frequency shows more or less strong correlations across.
+
+Figure \ref{fig:cumul_vars} shows what happens with the variance when cumulatively adding languages in a top-scoring fashion for each measurement. For content precision and recall as well as WLAS, the variance is lower for high performing languages, but takes off for content precision and recall when you get past the first eleven treebanks. WLAS keeps a lower score compared with LAS until the end where it joins LAS in a variance of 0.0045.
+
+Table \ref{tbl:human_judgment} lists Spearman correlations between manual evaluation of two parser models, where the evaluators given parsed sentences in each case chose which of two parser models they consider to provide the best output. Content precision and recall are in all cases except one inferior to LAS and WLAS, where the two latter are indistinguishable.
+
+
 <!-- Correlation matrix -->
 \begin{table}[t]
 \centering
@@ -235,14 +245,6 @@ We weight each dependency relation by its averaged WDE as presented in figure \r
 \caption{Correlations of LAS, WLAS, content precision and recall against human judgment data.}
 \label{tbl:human_judgment}
 \end{table}
-
-Figure \ref{fig:content_las_comparison} lists the parsing results for all languages, with LAS, WLAS, and content precision and recall. We can tell that LAS is consistently providing higher scores for each output compared to WLAS, while the content precision and recall scores are substantially lower. There are small differences for precision and recall for all except the worst performing languages where, given the higher recall, the parsing model seems to have a bias towards content dependencies.
-
-Table \ref{tbl:res_corrs} lists the Pearson correlation coefficient between treebanks for WLAS, LAS, content relations precision and recall, function relations precision and recall, and the frequency ratio of content and function relations in the treebanks. The correlation between the various suggested measurements, as well as with LAS, are quite strong. The content relations frequency has a strong negative correlation with function relations frequency, and negative across all the other measurements as well. Function relations frequency shows more or less strong correlations across.
-
-Figure \ref{fig:cumul_vars} shows what happens with the variance when cumulatively adding languages in a top-scoring fashion for each measurement. For content precision and recall as well as WLAS, the variance is lower for high performing languages, but takes off for content precision and recall when you get past the first eleven treebanks. WLAS keeps a lower score compared with LAS until the end where it joins LAS in a variance of 0.0045.
-
-Table \ref{tbl:human_judgment} lists Spearman correlations between manual evaluation of two parser models, where the evaluators given parsed sentences in each case chose which of two parser models they consider to provide the best output. Content precision and recall are in all cases except one inferior to LAS and WLAS, where the two latter are indistinguishable.
 
 # Discussion
 
