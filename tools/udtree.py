@@ -40,11 +40,11 @@ def conllu_to_sentence_structure(conllu_tree):
 
         # Replace _ with None for where it's allowed
         (cpostag, postag, feats,
-         head, deps, misc) = [param if param != "_" else None for param in
+         head, deps, misc) = [param if param not in ("_", "-") else None for param in
                               (cpostag, postag, feats, head, deps, misc)]
 
         # We only want lemma to be None if the word form itself isn't _
-        if lemma == "_" and word != "_":
+        if lemma in ("_", "-") and word not in ("_", "-"):
             lemma = None
 
         # Keep track of where the multi-word token starts and ends
