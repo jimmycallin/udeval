@@ -1,7 +1,27 @@
 import udtree
+import string
+
+def is_only_punctuation(gold_path):
+    is_punct = {}
+    puncts = set(string.punctuation)
+
+    for gold_tree in udtree.from_files(gold_path):
+        for token, deprel in zip(gold_tree.tokens, gold_tree.deprels):
+            all_puncts = True
+            for char in token:
+                if char not in puncts:
+                    all_puncts = False
+                    break
+            if all_puncts:
+                is_punct[deprel] = True
+            else:
+                is_punct[deprel] = False
+    return {deprel for deprel,val in is_punct.items() if val}
 
 
-def match_tree_attachments(system_tree, gold_tree, labeled=False, fine_grained_deprels=True):
+def match_tree_attachments(system_tree, gold_tree, labeled=False, fine_grained_deprels=True, ignore_deprels=None):
+    if ignore_deprels:
+        ignore_deprels = set(ignore_deprels)
     correct, incorrect = [], []
     total = 0
     for (system_head,
@@ -16,6 +36,9 @@ def match_tree_attachments(system_tree, gold_tree, labeled=False, fine_grained_d
             gold_label = gold_label.split(":")[0]
             system_label = system_label.split(":")[0]
 
+        if ignore_deprels and gold_label in ignore_deprels:
+            continue
+
         is_correct = False
         if system_head == gold_head:
             is_correct = True
@@ -29,16 +52,18 @@ def match_tree_attachments(system_tree, gold_tree, labeled=False, fine_grained_d
 
     return correct, incorrect
 
-def attachment_score(system_output_path, gold_path, labeled=True, fine_grained_deprels=True):
+def attachment_score(system_output_path, gold_path, labeled=True, fine_grained_deprels=True, include_punct=True):
+    puncts = None
+    if not include_punct:
+        puncts = set.union(is_only_punctuation(gold_path), {'punct'})
     system = udtree.from_files(system_output_path)
     gold = udtree.from_files(gold_path)
     correct, incorrect = 0, 0
     for system_tree, gold_tree in zip(system, gold):
         (tree_correct,
          tree_incorrect) = match_tree_attachments(system_tree, gold_tree, labeled,
-                                                  fine_grained_deprels=fine_grained_deprels)
-        #print("Correct: {} \n".format(tree_correct))
-        #print("Incorrect: {}".format(tree_incorrect))
+                                                  fine_grained_deprels=fine_grained_deprels,
+                                                  ignore_deprels=puncts)
         correct += len(tree_correct)
         incorrect += len(tree_incorrect)
 
