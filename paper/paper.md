@@ -12,9 +12,9 @@ bibliography: bibliography.bib
 
 # Introduction
 
-The role of language processing is becoming increasingly multi-lingual. This is reflected in recent efforts into providing dependency parsing frameworks that can reliably be applied on a multitude of languages. One of the currently most ambitious projects in this area is the Universal Dependencies (UD) framework [@nivre_universal_2015], where the goal is to create a parsing framework with a cross-linguistically consistent grammatical annotation. The purpose of this work is to remove the requirement of language specific components which has up to this point been a necessity due to inconsistent annotation standards.
+The role of language processing is becoming increasingly multi-lingual. This is reflected in recent efforts into providing dependency parsing frameworks that can reliably be applied on a multitude of languages. One of the currently most ambitious projects in this area is the Universal Dependencies (UD) framework [@nivre_universal_2015], where the goal is to create a parsing framework with a cross-linguistically consistent grammatical annotation. The purpose of this work is to remove the requirement of language specific components, which has up to this point been a necessity due to inconsistent annotation standards.
 
-Data-driven evaluation metrics have been used as long as the availability of treebanks (see @collins_headdriven_1999 chap. 4 and @carroll_parser_1998 for surveys on early results). To evaluate statistical parsing models, _Unlabeled Attachment Score_ (UAS) has been in use under different names since the early days. @eisner_empirical_1997 was first to call it attachment score, which refers to work done by @lin_dependencybased_1998. _Labeled Attachment Score_ (LAS) was first introduced in @nivre_memorybased_2004 to emphasize the importance of correct labeling. UAS is defined as the accuracy of correct attachments in a test collection, while LAS includes the additional constraint of requiring a correct attachment label. These have in their simplicity and intuitiveness served the research area well, but their design relies on a number of assumptions we argue do not hold in the context of UD.
+Data-driven evaluation metrics have been used as long as the availability of treebanks (see @collins_headdriven_1999 chap. 4 and @carroll_parser_1998 for surveys on early methods and results). To evaluate statistical parsing models, _Unlabeled Attachment Score_ (UAS) has been in use under different names since the early days. @eisner_empirical_1997 was first to call it attachment score, which refers to work done by @lin_dependencybased_1998. _Labeled Attachment Score_ (LAS) was first introduced in @nivre_memorybased_2004 to emphasize the importance of correct labeling. UAS is defined as the accuracy of correct attachments in a test collection, while LAS includes the additional constraint of requiring a correct attachment label. These have in their simplicity and intuitiveness served the research area well, but their design relies on a number of assumptions we argue do not hold in the context of UD.
 
 \begin{figure}
 \begin{center}
@@ -34,7 +34,7 @@ Data-driven evaluation metrics have been used as long as the availability of tre
 \label{finnishparsing}
 \end{figure}
 
-Firstly, the design of attachment scores assumes that we know next to nothing about the taxonomy and design choices of the parsing framework. This has historically been necessary since there have not been a consistently adapted framework for dependency parsing across many languages. We argue that recent progress in UD has made this assumption invalid. UD has a carefully specified framework that all UD treebanks have to adapt, and we can exploit this constraint to learn more about the performance of a model.
+Firstly, the design of attachment scores assumes that we know next to nothing about the taxonomy and design choices of the parsing framework. This has historically been necessary since there has not been a consistently adapted framework for dependency parsing across many languages. We argue that recent progress in UD has made this assumption invalid. UD has a carefully specified framework that all UD treebanks have to adapt, and we can exploit this constraint to learn more about the performance of a model.
 
 Secondly, parsing results are increasingly juxtaposed in a cross-linguistic manner, and this trend will likely continue with the establishment of UD. It is not uncommon to compare the output of e.g. English and Finnish under the assumption that equal evaluation scores is equivalent to equal parsing performance. The reason why this is problematic becomes apparent when studying grammatical morphemes in languages where these may be unbounded (i.e. function words) with languages where they typically are bounded on content words (i.e. affixes).
 
@@ -49,7 +49,7 @@ Based on these intuitions, our aim is to contribute to these two questions:
 
 Not much work has been done in cross-linguistic evaluation, and papers presenting evaluation scores on several languages simply use previously available metrics without analyzing their shortcomings in such a context. Before the work on UD was initiated, there have been several attempts at automatic normalization of dependency treebanks into a common format for a more robust evaluation [@zeman2012hamledt]. In light of this work on cross-linguistically consistent annotation frameworks, @tsarfaty_evaluating_2011 take a separate approach with cross-framework evaluation, where they suggest an evaluation technique that is robust towards differing annotation criteria. 
 
-Since UAS arguably has been more popular of the two attachment scores, finding performance results on subsets of labeled dependency relations is difficult. In cases of extensive error analysis it is possible to find sections devoted to this [@plank_domain_2011, chapter 6.6]. There have also been work looking at specific constructions, e.g. unbounded dependency evaluation [@nivre_evaluation_2010], where they argue that some dependency relations are more critical for a parser to get right than others.
+Since UAS arguably has been more popular of the two attachment scores, finding performance results on subsets of labeled dependency relations is difficult. In cases of extensive error analysis it is possible to find sections devoted to this [@plank_domain_2011, chapter 6.6]. There has also been work looking at specific constructions, e.g. unbounded dependency evaluation [@nivre_evaluation_2010], where they argue that some dependency relations are more critical for a parser to get right than others.
 
 @plank_dependency_2015 look closer at whether or not manual parsing evaluation correlate with standard dependency metrics, coming to the conclusion that none of today's established metrics are especially well correlated with human quality judgment. One of their main findings is that humans tend to consider content dependencies to be of more importance than function dependencies, which fits well with the assumptions made in this paper.
 
@@ -94,7 +94,7 @@ We will be using a subset of the Universal Dependencies treebank 1.2 [@nivre_uni
 
 - They have morphological features.
 - They have at least 30K tokens.
-- They have a small ratio of non-projective trees.
+- They have a low ratio of non-projective trees.
 - In the case of more than one valid treebank for a language, choose the treebank with manual corrections or largest token count.
 
 A total of 15 treebanks were removed. 5 of these had too few tokens, 4 lacked features, 2 had too many non-projective trees, while 4 treebanks were language duplicates. This leaves us with the 22 languages listed in table \ref{tbl:ud-treebanks}. Most notably we lost the French and German treebanks.
@@ -131,7 +131,7 @@ Function relations & Content relations \tabularnewline
 
 # Categorizing dependency relations
 
-We motivate our categorization into categories of function and content relations based on the specification of universal dependency relations\footnote{\url{http://universaldependencies.github.io/docs/u/dep/index.html}}, linguistic intuition, and a newly developed statistical method. First, let us define what we consider to be function and content relations:
+We motivate our choice of function and content relations based on the specification of universal dependency relations\footnote{\url{http://universaldependencies.github.io/docs/u/dep/index.html}}, linguistic intuition, and a newly developed statistical method. First, let us define what we consider to be function and content relations:
 
 - A _function relation_ is a relation that links a word with a function word.
 - A _content relation_ is a relation that either has _root_ as its head, or links a content word with another content word.
@@ -213,6 +213,8 @@ Figure \ref{fig:cumul_vars} shows what happens with the variance when cumulative
 
 Table \ref{tbl:human_judgment} lists Spearman correlations between manual evaluation of two parser models, where the evaluators given parsed sentences in each case chose which of two parser models they consider to provide the best output. Content precision and recall are in all cases except one inferior to LAS and WLAS, where the two latter are indistinguishable.
 
+Table \ref{tbl:cascading_errors} lists the ratio of correct parent dependency relations given a faulty relation of either function or content class, labeled or unlabeled. The parent of a token with a faulty relation is defined as the parent of the system output relation, and _not_ as the parent of the gold relation. A lower ratio means that the dependency class is more prone to cascading errors. The results show that function dependencies have more cascading errors than content dependencies.
+
 
 <!-- Correlation matrix -->
 \begin{table}[t]
@@ -240,6 +242,14 @@ Table \ref{tbl:human_judgment} lists Spearman correlations between manual evalua
 \label{tbl:human_judgment}
 \end{table}
 
+<!-- Cascading errors -->
+\begin{table}[t]
+\centering
+\resizebox{\columnwidth}{!}{\input{tables/cascading_errors.latex}}
+\caption{In the case of incorrect dependency relation of either function or content class, how frequent is it to have a correct (system output) parent relation? The lower the ratio, the more common are cascading errors.}
+\label{tbl:cascading_errors}
+\end{table}
+
 # Discussion
 
 Looking at function frequency and its precision in table \ref{tbl:res_corrs}, they have a correlation of $0.67$. This suggests that the larger rate of function words in a language, the easier it is to parse its function words. What is interesting is that this does not hold when looking at content frequency and its precision where one might expect that there is a strong positive correlation which would indicate that a high degree of content relations makes it easier to parse these classes. Instead, we find a weak negative correlation of $-0.25$. Furthermore, given languages' LAS scores, the more function words there is in a language, the better it performs. Even when looking at the relation between the amount of function words in a language with how well it does on content words, the correlation is weakly positive. We take this to mean that our choice of parser, while not explicitly tuned for any particular language, still benefits from a context with a high rate of grammatical function words. These findings support our hypothesis, that languages with a high degree of function dependency relations has an unfair advantage when comparing attachment scores across languages.
@@ -248,7 +258,7 @@ Regarding the evaluation scores for different evaluation metrics, as presented i
 
 Going back to table \ref{tbl:res_corrs}, a better measurement than LAS would be expected to have a weaker correlation with the function frequency ratio, showing that the importance of the amount of function words in a language decrease. While WLAS stays on the same level of correlation as LAS, content performance is much weaker.
 
-We ran the measurements on the human judgment data with the results given in table \ref{tbl:human_judgment}. Unfortunately, none of the metrics seems to improve upon the LAS score, which was the top scoring metric reported in the original paper. Only content recall sees some improvements over LAS for English, but other than that the results are either worse or equal to those of LAS. WLAS has overall very small changes compared to LAS, which is somewhat surprising given that the original paper commented on content relations being considered more important than function relations by the manual evaluators. This could possibly be explained by function relations overall performing quite well, and whenever there are erroneous function relations they are cascaded from faulty content relations. This hypothesis is as of yet untested.
+We ran the measurements on the human judgment data with the results given in table \ref{tbl:human_judgment}. Unfortunately, none of the metrics seems to improve upon the LAS score, which was the top scoring metric reported in the original paper. Only content recall sees some improvements over LAS for English, but other than that the results are either worse or equal to those of LAS. WLAS has overall very small changes compared to LAS, which is somewhat surprising given that the original paper commented on content relations being considered more important than function relations by the manual evaluators. This could possibly be explained by function relations overall performing quite well, and whenever there are erroneous function relations they are cascaded from faulty content relations. While this hypothesis is supported by table \ref{tbl:cascading_errors}, showing how erroneous function relations in all languages are more commonly having faulty parents than incorrect content relations, the differences are not large enough to indicate that this is the only reason. This might also just be an effect of function dependencies being further down in the tree than content dependencies,   
 
 Another approach is to look at the variance of the metrics. If our initial hypothesis holds, this should mean that some of the differences found between languages before evens out, and thereby lowering the variance when compared to LAS. As figure \ref{fig:cumul_vars} shows this does not hold when looking at all treebanks, but by cumulatively adding treebanks it is possible to study the effect as the performance decreases. This shows indeed that the variance is much lower among high-performing languages for WLAS and and content performance. This could potentially be explained by that differences among top-scoring languages are much less random due to a poor parsing model, and it is first among these that the effects of choice of metric really matters.
 
