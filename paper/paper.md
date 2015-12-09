@@ -57,35 +57,34 @@ Since UAS arguably has been more popular of the two attachment scores, finding p
 
 \begin{table}[t]
 \begin{center}
-\begin{tabular}{ll}
+\resizebox{0.9\columnwidth}{!}{
+\begin{tabular}{lrr}
 \toprule
-Treebank & Token size \\
+Treebank & Token size & Non-proj ratio\\
 \midrule
-Arabic & 282K \\
-Basque & 121K \\
-Bulgarian & 156K \\
-Croatian & 87K \\
-Czech & 1503K \\
-Danish & 100K \\
-Dutch & 200K \\
-English & 254K \\
-Finnish & 181K \\
-Gothic & 56K \\
-Greek & 59K \\
-Hebrew & 115K \\
-Hindi & 351K \\
-Italian & 252K \\
-Norwegian & 311K \\
-Old Church Slavonic & 57K \\
-Persian & 151K \\
-Polish & 83K \\
-Portuguese & 212K \\
-Slovenian & 140K \\
-Spanish & 423K \\
-Swedish & 96K \\
+Arabic & 282K & 0.01 \\
+Bulgarian & 156K & 0.03 \\
+Croatian & 87K & 0.05 \\
+Czech & 1503K & 0.09 \\
+Danish & 100K & 0.12 \\
+English & 254K & 0.02 \\
+Finnish & 181K & 0.04 \\
+Gothic & 56K & 0.12 \\
+Greek & 59K & 0.21 \\
+Hebrew & 115K & 0.00 \\
+Hindi & 351K & 0.04 \\
+Italian & 252K & 0.01 \\
+Norwegian & 311K & 0.02 \\
+Old Church Slavonic & 57K & 0.13 \\
+Persian & 151K & 0.04 \\
+Polish & 83K & 0.00 \\
+Portuguese & 212K & 0.15 \\
+Slovenian & 140K & 0.11 \\
+Spanish & 423K & 0.02 \\
+Swedish & 96K & 0.01 \\
 \bottomrule 
-\end{tabular}
-\caption{Selected treebanks from the UD 1.2 treebank collection, with their token size.}
+\end{tabular}}
+\caption{Selected treebanks from the UD 1.2 treebank collection, with their token size and amount of non-projective trees.}
 \label{tbl:ud-treebanks}
 \end{center}
 \end{table}
@@ -94,10 +93,10 @@ We will be using a subset of the Universal Dependencies treebank 1.2 [@nivre_uni
 
 - They have morphological features.
 - They have at least 30K tokens.
-- They have a low ratio of non-projective trees.
+- They have less than 25% non-projective trees.
 - In the case of more than one valid treebank for a language, choose the treebank with manual corrections or largest token count.
 
-A total of 15 treebanks were removed. 5 of these had too few tokens, 4 lacked features, 2 had too many non-projective trees, while 4 treebanks were language duplicates. This leaves us with the 22 languages listed in table \ref{tbl:ud-treebanks}. Most notably we lost the French and German treebanks.
+A total of 17 treebanks were removed. 5 of these had too few tokens, 4 lacked features, 4 had too many non-projective trees, while 4 treebanks were language duplicates. This leaves us with the 22 languages listed in table \ref{tbl:ud-treebanks}. Most notably we lost the French and German treebanks.
 
 For measuring the correlation of metrics to manual evaluation, we will be using parts of the human judgment data as provided by @plank_dependency_2015. Not all languages in the dataset are from the UD treebanks, thus only English, German, and Spanish are used.
 
@@ -156,7 +155,7 @@ Next question to answer is if we can motivate our classification not only on lin
 \begin{figure}[t]
 \hspace*{-1cm}
 \includegraphics{figures/standard_ttr.pdf}
-\caption{Standardized type/token ratio for chunks of 1000 tokens (blue), with content relation frequency ratio (green) and function relation frequency ratio (red). High STTR score implies high morphological complexity. $R(\mbox{Content freq}, \mbox{STTR}) = 0.27$, $R(\mbox{Function freq}, \mbox{STTR}) = -0.57$.}
+\caption{Standardized type/token ratio for chunks of 1000 tokens (blue), with content relation frequency ratio (green) and function relation frequency ratio (red). High STTR score implies high morphological complexity. $R(\mbox{Content freq}, \mbox{STTR}) = 0.23$, $R(\mbox{Function freq}, \mbox{STTR}) = -0.52$.}
 \label{fig:standard_ttr}
 \end{figure}
 
@@ -252,11 +251,11 @@ Table \ref{tbl:cascading_errors} lists the ratio of correct parent dependency re
 
 # Discussion
 
-Looking at function frequency and its precision in table \ref{tbl:res_corrs}, they have a correlation of $0.67$. This suggests that the larger rate of function words in a language, the easier it is to parse its function words. What is interesting is that this does not hold when looking at content frequency and its precision where one might expect that there is a strong positive correlation which would indicate that a high degree of content relations makes it easier to parse these classes. Instead, we find a weak negative correlation of $-0.25$. Furthermore, given languages' LAS scores, the more function words there is in a language, the better it performs. Even when looking at the relation between the amount of function words in a language with how well it does on content words, the correlation is weakly positive. We take this to mean that our choice of parser, while not explicitly tuned for any particular language, still benefits from a context with a high rate of grammatical function words. These findings support our hypothesis, that languages with a high degree of function dependency relations has an unfair advantage when comparing attachment scores across languages.
+Looking at function frequency and its precision in table \ref{tbl:res_corrs}, they have a correlation of $0.71$. This suggests that the larger rate of function words in a language, the easier it is to parse its function words. What is interesting is that this does not hold when looking at content frequency and its precision where one might expect that there is a strong positive correlation which would indicate that a high degree of content relations makes it easier to parse these classes. Instead, we find a weak negative correlation of $-0.34$. Furthermore, given languages' LAS scores, the more function words there is in a language, the better it performs. Even when looking at the relation between the amount of function words in a language with how well it does on content words, the correlation is weakly positive. We take this to mean that our choice of parser, while not explicitly tuned for any particular language, still benefits from a context with a high rate of grammatical function words. These findings support our hypothesis, that languages with a high degree of function dependency relations has an unfair advantage when comparing attachment scores across languages.
 
 Regarding the evaluation scores for different evaluation metrics, as presented in figure \ref{fig:content_las_comparison}, it is difficult to tell if any metric is better than the other. One might expect that the scoring difference of LAS and WLAS, or LAS and content performance, would correlate with its STTR score, since analytic languages like Hebrew and English have more to lose on decreasing the importance of function words. Unfortunately, this correlation is rather weak. Assuming that the STTR scoring is reliable, we believe this has to do with what we described above: languages with a high rate of function words provide a better context for content words for parsers. 
 
-Going back to table \ref{tbl:res_corrs}, a better measurement than LAS would be expected to have a weaker correlation with the function frequency ratio, showing that the importance of the amount of function words in a language decrease. While WLAS stays on the same level of correlation as LAS, content performance is much weaker.
+Going back to table \ref{tbl:res_corrs}, a better measurement than LAS would be expected to have a weaker correlation with the function frequency ratio, showing that the importance of the amount of function words in a language decrease. While WLAS has a somewhat weaker correlation as LAS, content performance is even more so.
 
 We ran the measurements on the human judgment data with the results given in table \ref{tbl:human_judgment}. Unfortunately, none of the metrics seems to improve upon the LAS score, which was the top scoring metric reported in the original paper. Only content recall sees some improvements over LAS for English, but other than that the results are either worse or equal to those of LAS. WLAS has overall very small changes compared to LAS, which is somewhat surprising given that the original paper commented on content relations being considered more important than function relations by the manual evaluators. This could possibly be explained by function relations overall performing quite well, and whenever there are erroneous function relations they are cascaded from faulty content relations. While this hypothesis is supported by table \ref{tbl:cascading_errors}, showing how erroneous function relations in all languages are more commonly having faulty parents than incorrect content relations, the differences are not large enough to indicate that this is the only reason. This might also just be an effect of function dependencies being further down in the tree than content dependencies,   
 
