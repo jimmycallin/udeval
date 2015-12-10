@@ -1,0 +1,6 @@
+In the case UD treebank is not here, here's what you need to do to add it:
+
+1. Download the 1.2 version, or later versions but then you need to do some job in ../tools/lang_utils.py
+2. Run ../tools/connlu2conllx.py. Make sure the fine_grained_deprels is set to False
+
+Now you should be set to rerun the experiments in ../notebook!
