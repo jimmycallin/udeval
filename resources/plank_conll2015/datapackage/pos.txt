@@ -1,0 +1,14 @@
+For UD languages, we considered: 
+nominalpos = "NOUN PRON PROPN"
+contentpos = "ADJ NOUN PROPN VERB"
+functionpos = "ADP ADV AUX CONJ DET PART PRON SCONJ"
+
+For HR:
+nominalpos = "N P"
+contentpos = "A N V"
+functionpos = "C Q M P R S"
+
+For DA:
+nominalpos = "NP NC PP PD"
+contentpos = "AN NC NP VA VE"
+functionpos = "AC AO CC CS PC PD PI PO PP PT RG SP U"

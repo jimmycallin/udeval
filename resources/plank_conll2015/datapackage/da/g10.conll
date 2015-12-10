@@ -1,0 +1,10 @@
+1	Det	det	PP	PP3NSU-NU	person=3|gender=neuter|number=sing|case=unmarked|reflexive=no|register=unmarked	2	pred	_	_
+2	er	være	VA	VADR=----A-	mood=indic|tense=present|voice=active	0	ROOT	_	_
+3	det	det	PP	PP3NSU-NU	person=3|gender=neuter|number=sing|case=unmarked|reflexive=no|register=unmarked	2	subj	_	_
+4	stadig	stadig	RG	RGU	degree=unmarked	2	mod	_	_
+5	.	.	XP	XP	_	2	pnct	_	_
+
+1	Det	det	PP	PP3NSU-NU	person=3|gender=neuter|number=sing|case=unmarked|reflexive=no|register=unmarked	2	dobj	_	_
+2	siger	sige	VA	VADR=----A-	mood=indic|tense=present|voice=active	0	ROOT	_	_
+3	de	de	PP	PP3[CN]PN-NU	person=3|gender=common/neuter|number=plur|case=nom|reflexive=no|register=unmarked	2	subj	_	_
+4	altid	altid	RG	RGU	degree=unmarked	2	mod	_	_

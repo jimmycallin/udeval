@@ -1,0 +1,88 @@
+***********************************************************************
+README
+***********************************************************************
+encoding: utf-8
+
+This dataset is averaged over 10 native English speakers reading 250 sentences, one sentence per screen. All sentences were read by all people, but in one of 5 randomized orders. For further details about the experiment see Barrett & Søgaard (2015a). Results predicting POS and dependency relations are presented in Barrett & Søgaard (2015a) and Barrett & Søgaard (2015b).
+
+All sentences are randomly sampled from treebanks. Only requirements were max characters: 120, min tokens: 3.
+There are 50 sentences from 5 different domains:
+Wall Street Journal (WSJ)
+Wall Street Journal headlines (HDL)
+Emails (MAI)
+Weblogs (WBL)
+Twitter (TWI)
+
+Wall Street Journal sentences are from OntoNotes 4.0 release of the English Penn Treebank. catalog.ldc. upenn.edu/LDC2011T03. Mail and weblog sentences come from the English Web Treebank. catalog.ldc. upenn.edu/LDC2012T13. Twitter sentences are from the work of (Foster et al., 2011).
+
+Questions? Feel free to contact Maria Barrett http://cst.ku.dk/english/ansatte/?pure=en/persons/455610
+
+-----------------------------------------------------------------------
+Columns
+-----------------------------------------------------------------------
+....................
+Syntax
+....................
+'POStag' is the PTB tag from the treebanks.
+'UniversalPOS' is the mapped PTB tag to the Universal POS tag set (Petrov et al. 2011)
+'DepRel' is the dependency relation - from the treebanks
+'Head' refers to the index in the column ID - within the same 'Stimuliname'
+'Headdirection', 'Disttoheadnominal', 'Disttohead', 'Disttoheadabs' are derived from the treebank columns described above
+
+....................
+Experimental
+....................
+'Stimuliname' is a unique sentence identifier. First 3 chars identifies the domain. (MAI|WBL|TWI|HDL|WSJ)
+'InterestRating' and 'InterestRating n std from mean' is the average interest rating this sentence got on the Likert scale (1-6, 6 being more interested) right after reading. 'InterestRating n std from mean' is the individual mean, trying to correct for individual variation in the exitability of the subjects.
+'Word len' and 'Sentence len' are self explanatory...
+'Frequency' is the frequency in the English Web Treebank. Out-of-vocabulary words (around 500) got the value 0. 
+
+....................
+Gaze features
+....................
+All gaze features are averaged over 10 readers - except a few sentences that were only read by 9 due to a participant accidentally left the sentence before reading it (the experiment was self-paced)
+The feature collection is inspired by  Salojärvi et al. (2003).
+Some features are sentence-based. If they are noemalized, then these features are normalized by token count. 
+
+I tried to make the feature names self-explanatory, sacrificing short column names in the process
+
+'First fixation duration on every word': 
+'Fixation prob'
+'Mean fixation duration per word'
+'Next fixation duration'
+'Next word fixated binary'
+'P1stFix' The probability that this word got the first fixation when reading this sentence
+'P2ndFix' The probability that this word got the second fixation when reading this sentence
+'Previous fixation duration'
+'Previous word fixated binary': Actually: Previous fixation probability (it was a binary feature for the individual reader)
+'Re-read prob': The probability that this word got a second fixation no matter if it came from refixations, long og short regressions
+'Reading time per sent norm': in seconds, normalized by token count
+'Share of fixated words per sent'
+'TimePrctg': How much time of the total sentence reading time was spent on this word
+'Total fixation duration per word'
+'Total regression from duration' If a fixation came to this word from a place further right in the sentence it's defined as a regression. 
+'Total regresssion to duration',
+'nFixations',
+'nFixations per sent norm': normalized by token count
+'nLong regressions from': See explanation of regression. A long regression is defined as a regression going more than 3 tokens back
+'nLong regressions per sent norm',
+'nLong regressions to',
+'nRefixations': Two fixations in a row on the same word. 
+'nRefixations per sent norm',
+'nRegressions from',
+'nRegressions per sent norm',
+'nRegressions to'
+'Mean fixation duration per sent'
+
+-----------------------------------------------------------------------
+References
+-----------------------------------------------------------------------
+Maria Barrett and Anders Søgaard. 2015a. Reading behavior predicts syntactic categories. In CoNLL 2015, pages 345–249.
+
+Maria Barrett and Anders Søgaard. 2015b. Using reading behavior to predict grammatical functions. In Proc. of Workshop on Cognitive Aspects of Computational Language Learning (CogACLL) @EMNLP
+
+Jennifer Foster, Ozlem Cetinoglu, Joachim Wagner, Josef Le Roux, Joakim Nivre, Deirde Hogan, and Josef van Genabith. 2011. From news to comments: Resources and benchmarks for parsing the language of Web 2.0. In IJCNLP.
+
+Jarkko Salojärvi, Ilpo Kojo, Jaana Simola, and Samuel Kaski. 2003. Can relevance be inferred from eye movements in information retrieval. In Proceedings of WSOM, volume 3, pages 261–266.
+
+Slav Petrov, Dipanjan Das, and Ryan McDonald. 2011. A universal part-of-speech tagset. arXiv preprint arXiv:1104.2086.

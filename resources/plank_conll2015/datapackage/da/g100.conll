@@ -1,0 +1,100 @@
+1	Det	det	PP	PP3NSU-NU	person=3|gender=neuter|number=sing|case=unmarked|reflexive=no|register=unmarked	2	pred	_	_
+2	er	være	VA	VADR=----A-	mood=indic|tense=present|voice=active	0	ROOT	_	_
+3	det	det	PP	PP3NSU-NU	person=3|gender=neuter|number=sing|case=unmarked|reflexive=no|register=unmarked	2	subj	_	_
+4	stadig	stadig	RG	RGU	degree=unmarked	2	mod	_	_
+5	.	.	XP	XP	_	2	pnct	_	_
+
+1	Det	det	PP	PP3NSU-NU	person=3|gender=neuter|number=sing|case=unmarked|reflexive=no|register=unmarked	2	dobj	_	_
+2	siger	sige	VA	VADR=----A-	mood=indic|tense=present|voice=active	0	ROOT	_	_
+3	de	de	PP	PP3[CN]PN-NU	person=3|gender=common/neuter|number=plur|case=nom|reflexive=no|register=unmarked	2	subj	_	_
+4	altid	altid	RG	RGU	degree=unmarked	2	mod	_	_
+5	.	.	XP	XP	_	2	pnct	_	_
+
+1	Ud	ud	RG	RGU	degree=unmarked	0	ROOT	_	_
+2	at	at	U	U=	_	1	nobj	_	_
+3	købe	købe	VA	VAF-=----A-	mood=infin|voice=active	2	vobj	_	_
+4	ind	ind	RG	RGU	degree=unmarked	3	part	_	_
+5	.	.	XP	XP	_	1	pnct	_	_
+
+1	Andet	anden	PI	PI-NSU--U	gender=neuter|number=sing|case=unmarked|register=unmarked	5	dobj	_	_
+2	kan	kunne	VA	VADR=----A-	mood=indic|tense=present|voice=active	0	ROOT	_	_
+3	jeg	jeg	PP	PP1CSN-NU	person=1|gender=common|number=sing|case=nom|reflexive=no|register=unmarked	2	subj	_	_
+4	ikke	ikke	RG	RGU	degree=unmarked	2	mod	_	_
+5	sige	sige	VA	VAF-=----A-	mood=infin|voice=active	2	vobj	_	_
+6	.	.	XP	XP	_	2	pnct	_	_
+
+1	Vi	vi	PP	PP1CPN-NU	person=1|gender=common|number=plur|case=nom|reflexive=no|register=unmarked	2	subj	_	_
+2	har	have	VA	VADR=----A-	mood=indic|tense=present|voice=active	0	ROOT	_	_
+3	alt	alt	RG	RGU	degree=unmarked	4	mod	_	_
+4	for	for	RG	RGU	degree=unmarked	5	mod	_	_
+5	travlt	travl	AN	ANP---=-R	degree=pos|transcat=adverbial	2	aobj	_	_
+6	.	.	XP	XP	_	2	pnct	_	_
+
+1	"	&quot;	XP	XP	_	3	pnct	_	_
+2	Nu	nu	RG	RGU	degree=unmarked	3	mod	_	_
+3	er	være	VA	VADR=----A-	mood=indic|tense=present|voice=active	0	ROOT	_	_
+4	jeg	jeg	PP	PP1CSN-NU	person=1|gender=common|number=sing|case=nom|reflexive=no|register=unmarked	3	subj	_	_
+5	passiv	passiv	AN	ANPCSU=IU	degree=pos|gender=common|number=sing|case=unmarked|def=indef|transcat=unmarked	6	mod	_	_
+6	investor	investor	NC	NCCSU==I	gender=common|number=sing|case=unmarked|def=indef	3	pred	_	_
+7	.	.	XP	XP	_	3	pnct	_	_
+
+1	Brusken	brusk	NC	NCCSU==D	gender=common|number=sing|case=unmarked|def=def	2	subj	_	_
+2	kan	kunne	VA	VADR=----A-	mood=indic|tense=present|voice=active	0	ROOT	_	_
+3	eventuelt	eventuel	AN	ANP---=-R	degree=pos|transcat=adverbial	2	mod	_	_
+4	også	også	RG	RGU	degree=unmarked	2	mod	_	_
+5	glattes	glatte	VA	VAF-=----P-	mood=infin|voice=passive	2	vobj	_	_
+6	af	af	RG	RGU	degree=unmarked	5	pobj	_	_
+7	.	.	XP	XP	_	2	pnct	_	_
+
+1	Har	have	VA	VADR=----A-	mood=indic|tense=present|voice=active	0	ROOT	_	_
+2	du	du	PP	PP2CSN-NU	person=2|gender=common|number=sing|case=nom|reflexive=no|register=unmarked	1	subj	_	_
+3	nogle	nogen	PI	PI-[CN]PU--U	gender=common/neuter|number=plur|case=unmarked|register=unmarked	1	dobj	_	_
+4	planer	plan	NC	NCCPU==I	gender=common|number=plur|case=unmarked|def=indef	3	nobj	_	_
+5	for	for	SP	SP	_	4	pobj	_	_
+6	fremtiden	fremtid	NC	NCCSU==D	gender=common|number=sing|case=unmarked|def=def	5	nobj	_	_
+7	?	?	XP	XP	_	1	pnct	_	_
+
+1	Men	men	CC	CC	_	0	ROOT	_	_
+2	er	være	VA	VADR=----A-	mood=indic|tense=present|voice=active	1	conj	_	_
+3	den	den	PP	PP3CSU-NU	person=3|gender=common|number=sing|case=unmarked|reflexive=no|register=unmarked	2	subj	_	_
+4	nu	nu	RG	RGU	degree=unmarked	2	mod	_	_
+5	også	også	RG	RGU	degree=unmarked	2	mod	_	_
+6	det	det	PP	PP3NSU-NU	person=3|gender=neuter|number=sing|case=unmarked|reflexive=no|register=unmarked	2	pred	_	_
+7	?	?	XP	XP	_	1	pnct	_	_
+
+1	Naiv	naiv	AN	ANPCSU=IU	degree=pos|gender=common|number=sing|case=unmarked|def=indef|transcat=unmarked	0	ROOT	_	_
+2	,	,	XP	XP	_	1	pnct	_	_
+3	primitiv	primitiv	AN	ANPCSU=IU	degree=pos|gender=common|number=sing|case=unmarked|def=indef|transcat=unmarked	1	conj	_	_
+4	,	,	XP	XP	_	1	pnct	_	_
+5	enkle	enkel	AN	ANP[CN]PU=[DI]U	degree=pos|gender=common/neuter|number=plur|case=unmarked|def=def/indef|transcat=unmarked	6	mod	_	_
+6	følelser	følelse	NC	NCCPU==I	gender=common|number=plur|case=unmarked|def=indef	1	conj	_	_
+7	.	.	XP	XP	_	1	pnct	_	_
+
+1	Flertallet	flertal	NC	NCNSU==D	gender=neuter|number=sing|case=unmarked|def=def	4	subj	_	_
+2	af	af	SP	SP	_	1	pobj	_	_
+3	bekendtskabskredsen	bekendtskabskreds	NC	NCCSU==D	gender=common|number=sing|case=unmarked|def=def	2	nobj	_	_
+4	står	stå	VA	VADR=----A-	mood=indic|tense=present|voice=active	0	ROOT	_	_
+5	nu	nu	RG	RGU	degree=unmarked	4	mod	_	_
+6	uden	uden	SP	SP	_	4	pobj	_	_
+7	arbejde	arbejde	NC	NCNSU==I	gender=neuter|number=sing|case=unmarked|def=indef	6	nobj	_	_
+8	.	.	XP	XP	_	4	pnct	_	_
+
+1	For	for	SP	SP	_	4	mod	_	_
+2	de	den	PD	PD-[CN]PU--U	gender=common/neuter|number=plur|case=unmarked|register=unmarked	1	nobj	_	_
+3	fleste	mange	AN	ANS[CN]PU=DU	degree=sup|gender=common/neuter|number=plur|case=unmarked|def=def|transcat=unmarked	2	nobj	_	_
+4	går	gå	VA	VADR=----A-	mood=indic|tense=present|voice=active	0	ROOT	_	_
+5	dagen	dag	NC	NCCSU==D	gender=common|number=sing|case=unmarked|def=def	4	subj	_	_
+6	uden	uden	SP	SP	_	4	mod	_	_
+7	pauser	pause	NC	NCCPU==I	gender=common|number=plur|case=unmarked|def=indef	6	nobj	_	_
+8	.	.	XP	XP	_	4	pnct	_	_
+
+1	Foreløbig	foreløbig	AN	ANP---=-R	degree=pos|transcat=adverbial	2	mod	_	_
+2	er	være	VA	VADR=----A-	mood=indic|tense=present|voice=active	0	ROOT	_	_
+3	den	den	PP	PP3CSU-NU	person=3|gender=common|number=sing|case=unmarked|reflexive=no|register=unmarked	2	subj	_	_
+4	planlagt	planlægge	VA	VAPA=S[CN]I[ARU]-U	mood=partic|tense=past|number=sing|gender=common/neuter|definiteness=indef|transcat=adject/adverb/unmarked|case=unmarked	2	pred	_	_
+5	til	til	SP	SP	_	4	pobj	_	_
+6	medio	medio	RG	RGU	degree=unmarked	7	mod	_	_
+7	marts	marts	NC	NCCSU==I	gender=common|number=sing|case=unmarked|def=indef	5	nobj	_	_
+8	.	.	XP	XP	_	2	pnct	_	_
+
+1	Han	han	PP	PP3CSN-NU	person=3|gender=common|number=sing|case=nom|reflexive=no|register=unmarked	2	subj	_	_
