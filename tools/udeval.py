@@ -24,10 +24,12 @@ def match_tree_attachments(system_tree, gold_tree, labeled=False, fine_grained_d
         ignore_deprels = set(ignore_deprels)
     correct, incorrect = [], []
     total = 0
-    for (system_head,
+    for (index,
+         system_head,
          system_label,
          gold_head,
-         gold_label) in zip(system_tree.heads,
+         gold_label) in zip(gold_tree.ids,
+                            system_tree.heads,
                             system_tree.deprels,
                             gold_tree.heads,
                             gold_tree.deprels):
@@ -46,13 +48,13 @@ def match_tree_attachments(system_tree, gold_tree, labeled=False, fine_grained_d
                 is_correct = False
 
         if is_correct:
-            correct.append((system_head, system_label, gold_head, gold_label))
+            correct.append((index, system_head, system_label, gold_head, gold_label))
         else:
-            incorrect.append((system_head, system_label, gold_head, gold_label))
+            incorrect.append((index, system_head, system_label, gold_head, gold_label))
 
     return correct, incorrect
 
-def attachment_score(system_output_path, gold_path, labeled=True, fine_grained_deprels=True, include_punct=True):
+def attachment_score(system_output_path, gold_path, labeled=True, fine_grained_deprels=True, include_punct=False):
     puncts = None
     if not include_punct:
         puncts = set.union(is_only_punctuation(gold_path), {'punct'})
@@ -84,11 +86,11 @@ def labels_precision_recall(system_output_path,
         (tree_correct,
          tree_incorrect) = match_tree_attachments(system_tree, gold_tree, True,
                                                   fine_grained_deprels=fine_grained_deprels)
-        for _, system_label, _, _ in tree_correct:
+        for _, _, system_label, _, _ in tree_correct:
             if system_label in labels:
                 system_correct += 1
                 gold_count += 1
-        for _, system_label, _, gold_label in tree_incorrect:
+        for _, _, system_label, _, gold_label in tree_incorrect:
             if gold_label in labels:
                 gold_count += 1
             if system_label in labels:
@@ -114,11 +116,41 @@ def weighted_las(system_output_path, gold_path, weights):
         (tree_correct,
            tree_incorrect) = match_tree_attachments(system_tree, gold_tree, True,
                                                   fine_grained_deprels=False)
-        for _, _, _, gold_label in tree_correct:
+        for _, _, _, _, gold_label in tree_correct:
             correct += weights[gold_label]
 
-        for _, _, _, gold_label in tree_incorrect:
+        for _, _, _, _, gold_label in tree_incorrect:
             incorrect += weights[gold_label]
+
+    if (correct + incorrect) == 0:
+        return float("NaN")
+
+    return correct / (correct + incorrect)
+
+
+def root_distance(tree, index):
+    if tree.heads[index-1] == 0:
+        return 1
+    else:
+        return 1 + root_distance(tree, tree.heads[index-1])
+
+def root_distance_las(system_output_path, gold_path, include_punct=False):
+    puncts = None
+    if not include_punct:
+        puncts = set.union(is_only_punctuation(gold_path), {'punct'})
+    system = udtree.from_files(system_output_path)
+    gold = udtree.from_files(gold_path)
+    correct, incorrect = 0, 0
+    for system_tree, gold_tree in zip(system, gold):
+        (tree_correct,
+           tree_incorrect) = match_tree_attachments(system_tree, gold_tree, True,
+                                                  fine_grained_deprels=False,
+                                                  ignore_deprels=puncts)
+        for index, _, _, _, gold_label in tree_correct:
+            correct += 1 / root_distance(gold_tree, index)
+
+        for index, _, _, _, gold_label in tree_incorrect:
+            incorrect += 1 / root_distance(gold_tree, index)
 
     if (correct + incorrect) == 0:
         return float("NaN")
