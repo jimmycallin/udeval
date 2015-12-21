@@ -8,6 +8,7 @@
 from subprocess import call
 from os.path import join
 from os import rename
+import lang_utils
 
 treebank_base = "/home/stp11/kanin/udeval/resources/universaldependencies1-2/universal-dependencies-1.2/"
 train_files = lang_utils.get_ud_paths(treebank_base, type_="train", format_="conllx")
