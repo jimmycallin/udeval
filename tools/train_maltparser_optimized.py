@@ -32,7 +32,7 @@ for lang, train_file in train_files.items():
     print("Optimizing language {}".format(lang))
     optimize_model(lang, join(project_base, treebank_base, lang, train_file))
     print("Training language {}".format(lang))
-    training_path = ["-i", train_file)
+    training_path = ["-i", train_file]
     optimized_config = ["-f", join(project_base, "resources", "maltopt_configs_1-2", lang + "_finalOptionsFile.xml")]
     model_path = ["-c", "ud-1.2." + lang]
     call(base_cmd + jar_path + model_path + optimized_config + mode + training_path)
