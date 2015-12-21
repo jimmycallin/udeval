@@ -31,7 +31,7 @@ def optimize_model(lang, train_file):
 
 for lang, train_file in train_files.items():
     print("Optimizing language {}".format(lang))
-    optimize_model(lang, join(project_base, treebank_base, lang, train_file))
+    optimize_model(lang, train_file)
     print("Training language {}".format(lang))
     training_path = ["-i", train_file]
     optimized_config = ["-f", join(project_base, "resources", "maltopt_configs_1-2", lang + "_finalOptionsFile.xml")]
