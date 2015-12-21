@@ -30,6 +30,8 @@ def optimize_model(lang, train_file):
     rename("finalOptionsFile.xml", join(project_base, "resources", "maltopt_configs", lang + "_finalOptionsFile.xml"))
 
 for lang, train_file in train_files.items():
+    print(train_file)
+    train_file = train_file[0]
     print("Optimizing language {}".format(lang))
     optimize_model(lang, train_file)
     print("Training language {}".format(lang))
