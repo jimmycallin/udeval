@@ -11,7 +11,7 @@ from os import rename
 import lang_utils
 
 treebank_base = "/home/stp11/kanin/udeval/resources/universaldependencies1-2/universal-dependencies-1.2/"
-train_files = lang_utils.get_ud_paths(treebank_base, type_="train", format_="conllx")
+train_files = lang_utils.get_ud_paths(treebank_base, type_="train", format_="conllx", coarse=True)
 project_base = "/home/stp11/kanin/udeval/"
 
 maltparser_path = join(project_base, "tools",
