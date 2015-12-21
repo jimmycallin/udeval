@@ -17,7 +17,7 @@ project_base = "/home/stp11/kanin/udeval/"
 maltparser_path = join(project_base, "tools",
                        "maltparser-1.8.1", "maltparser-1.8.1.jar")
 maltoptimizer_path = join(project_base, "tools", "MaltOptimizer-1.0.3", "MaltOptimizer.jar")
-optimized_config_base = join(project_base, "resources", "maltopt_configs")
+optimized_config_base = join(project_base, "resources", "maltopt_configs_1-2")
 
 base_cmd = ["java", "-Xmx8G"]
 jar_path = ["-jar", maltparser_path]
@@ -27,7 +27,7 @@ def optimize_model(lang, train_file):
     call(["java", "-jar", maltoptimizer_path, "-p", "1", "-m", maltparser_path, "-c", train_file])
     call(["java", "-jar", maltoptimizer_path, "-p", "2", "-m", maltparser_path, "-c", train_file])
     call(["java", "-jar", maltoptimizer_path, "-p", "3", "-m", maltparser_path, "-c", train_file])
-    rename("finalOptionsFile.xml", join(project_base, "resources", "maltopt_configs", lang + "_finalOptionsFile.xml"))
+    rename("finalOptionsFile.xml", join(project_base, "resources", "maltopt_configs_1-2", lang + "_finalOptionsFile.xml"))
 
 for lang, train_file in train_files.items():
     print(train_file)
