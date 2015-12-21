@@ -9,27 +9,9 @@ from subprocess import call
 from os.path import join
 from os import rename
 
-train_files = {'UD_Basque': 'eu-ud-train.conllx',
-               'UD_Croatian': 'hr-ud-train.conllx',
-               'UD_Danish': 'da-ud-train.conllx',
-               'UD_Finnish': 'fi-ud-train.conllx',
-               'UD_French': 'fr-ud-train.conllx',
-               'UD_Greek': 'el-ud-train.conllx',
-               'UD_Hungarian': 'hu-ud-train.conllx',
-               'UD_Irish': 'ga-ud-train.conllx',
-               'UD_Persian': 'fa-ud-train.conllx',
-               'UD_Swedish': 'sv-ud-train.conllx',
-               'UD_Bulgarian': 'bg-ud-train.conllx',
-               'UD_Czech': 'cs-ud-train.conllx',
-               'UD_English': 'en-ud-train.conllx',
-               'UD_Finnish-FTB': 'fi_ftb-ud-train.conllx',
-               'UD_German': 'de-ud-train.conllx',
-               'UD_Hebrew': 'he-ud-train.conllx',
-               'UD_Indonesian': 'id-ud-train.conllx',
-               'UD_Italian': 'it-ud-train.conllx',
-               'UD_Spanish': 'es-ud-train.conllx'}
-
-project_base = "/Users/jimmy/dev/edu/nlp-rod/udeval/"
+treebank_base = "/home/stp11/kanin/udeval/resources/universaldependencies1-2/universal-dependencies-1.2/"
+train_files = lang_utils.get_ud_paths(treebank_base, type_="train", format_="conllx")
+project_base = "/home/stp11/kanin/udeval/"
 
 maltparser_path = join(project_base, "tools",
                        "maltparser-1.8.1", "maltparser-1.8.1.jar")
@@ -48,16 +30,15 @@ def optimize_model(lang, train_file):
 
 for lang, train_file in train_files.items():
     print("Optimizing language {}".format(lang))
-    optimize_model(lang, join(project_base, "resources", "universaldependencies1-1", "ud-treebanks-v1.1", lang, train_file))
+    optimize_model(lang, join(project_base, treebank_base, lang, train_file))
     print("Training language {}".format(lang))
-    training_path = ["-i", join(project_base, "resources", "universaldependencies1-1",
-                               "ud-treebanks-v1.1", lang, train_file)]
-    optimized_config = ["-f", join(project_base, "resources", "maltopt_configs", lang + "_finalOptionsFile.xml")]
-    model_path = ["-c", "ud-1.1." + lang]
+    training_path = ["-i", train_file)
+    optimized_config = ["-f", join(project_base, "resources", "maltopt_configs_1-2", lang + "_finalOptionsFile.xml")]
+    model_path = ["-c", "ud-1.2." + lang]
     call(base_cmd + jar_path + model_path + optimized_config + mode + training_path)
 
     # Move model file to resources
-    rename(model_path[1] + ".mco", join(project_base, "resources", "maltopt_models", model_path[1] + ".mco"))
+    rename(model_path[1] + ".mco", join(project_base, "resources", "maltopt_models_1-2", model_path[1] + ".mco"))
 
 
 # java -jar MaltOptimizer.jar -p 1 -m ../maltparser-1.8.1/maltparser-1.8.1.jar -c /Users/jimmy/dev/edu/nlp-rod/udeval/resources/universaldependencies1-1/ud-treebanks-v1.1/UD_English/en-ud-train.conllx
