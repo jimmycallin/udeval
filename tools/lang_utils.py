@@ -4,7 +4,16 @@ from os.path import join
 ignore = {"Ancient_Greek", "German", "Ancient_Greek-PROIEL", "Estonian",
           "Finnish-FTB", "French", "German", "Hungarian", "Indonesian",
           "Irish", "Japanese-KTC", "Latin", "Latin-ITT", "Latin-PROIEL",
-          "Romanian", "Tamil", "Basque", "Dutch"}
+          "Romanian", "Tamil", "Basque", "Dutch",
+"Bulgarian",
+"Danish",
+"Polish",
+"Spanish",
+"Czech",
+"Finnish",
+"Portuguese",
+"Swedish",
+"Czech"}
 
 udname2lang =  {"UD_Ancient_Greek": "Ancient_Greek",
                 "UD_Danish": "Danish",
