@@ -1,0 +1,13 @@
+Training set path:/Users/jimmy/dev/edu/nlp-rod/udeval/resources/universaldependencies1-2/universal-dependencies-1.2/UD_English/en-ud-train.coarse_deprels.conllx
+Size (tokens):204586
+Size (sentences):12543
+Non projective:5.237981344176035
+Dangling Punctuation:0
+LAS:83.9
+Default:83.9
+NumRootLabels:1
+JavaHeap:-Xmx5120m
+MaxTokens:2147483647
+CposEqPos:false
+LemmaBlank:false
+FeatsBlank:false

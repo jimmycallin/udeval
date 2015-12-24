@@ -1,0 +1,13 @@
+Training set path:/Users/jimmy/dev/edu/nlp-rod/udeval/resources/universaldependencies1-2/universal-dependencies-1.2/UD_Gothic/got-ud-train.coarse_deprels.conllx
+Size (tokens):44722
+Size (sentences):4360
+Non projective:23.89908256880734
+Dangling Punctuation:0
+LAS:65.46
+Default:65.46
+NumRootLabels:1
+JavaHeap:-Xmx2048m
+MaxTokens:2147483647
+CposEqPos:false
+LemmaBlank:false
+FeatsBlank:false

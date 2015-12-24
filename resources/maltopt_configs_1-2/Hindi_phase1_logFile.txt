@@ -1,0 +1,13 @@
+Training set path:/Users/jimmy/dev/edu/nlp-rod/udeval/resources/universaldependencies1-2/universal-dependencies-1.2/UD_Hindi/hi-ud-train.coarse_deprels.conllx
+Size (tokens):281057
+Size (sentences):13304
+Non projective:13.807877330126278
+Dangling Punctuation:0
+LAS:86.5
+Default:86.5
+NumRootLabels:1
+JavaHeap:-Xmx5120m
+MaxTokens:2147483647
+CposEqPos:false
+LemmaBlank:false
+FeatsBlank:false

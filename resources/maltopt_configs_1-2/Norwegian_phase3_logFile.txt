@@ -1,0 +1,13 @@
+Training set path:/Users/jimmy/dev/edu/nlp-rod/udeval/resources/universaldependencies1-2/universal-dependencies-1.2/UD_Norwegian/no-ud-train.coarse_deprels.conllx
+Size (tokens):244776
+Size (sentences):15696
+Non projective:7.810907237512741
+Dangling Punctuation:0
+LAS:87.01
+Default:84.89
+NumRootLabels:1
+JavaHeap:-Xmx5120m
+MaxTokens:2147483647
+CposEqPos:true
+LemmaBlank:false
+FeatsBlank:false
