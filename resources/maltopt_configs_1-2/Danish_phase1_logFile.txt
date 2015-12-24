@@ -1,0 +1,13 @@
+Training set path:/home/stp11/kanin/udeval/resources/universaldependencies1-2/universal-dependencies-1.2/UD_Danish/da-ud-train.coarse_deprels.conllx
+Size (tokens):88979
+Size (sentences):4868
+Non projective:22.69926047658176
+Dangling Punctuation:0
+LAS:74.38
+Default:74.38
+NumRootLabels:1
+JavaHeap:-Xmx4096m
+MaxTokens:2147483647
+CposEqPos:true
+LemmaBlank:false
+FeatsBlank:false

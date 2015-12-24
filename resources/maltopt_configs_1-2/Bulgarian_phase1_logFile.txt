@@ -1,0 +1,13 @@
+Training set path:/home/stp11/kanin/udeval/resources/universaldependencies1-2/universal-dependencies-1.2/UD_Bulgarian/bg-ud-train.coarse_deprels.conllx
+Size (tokens):124474
+Size (sentences):8907
+Non projective:2.862916807005726
+Dangling Punctuation:0
+LAS:82.31
+Default:82.31
+NumRootLabels:1
+JavaHeap:-Xmx5120m
+MaxTokens:2147483647
+CposEqPos:false
+LemmaBlank:false
+FeatsBlank:false
