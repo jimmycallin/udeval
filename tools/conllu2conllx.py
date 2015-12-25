@@ -12,7 +12,7 @@ def convert(to_convert_files):
         file_ending = ".conllx"
         if not fine_grained_deprels:
             file_ending = ".coarse_deprels.conllx"
-        if lang == "UD_Czech" and len(files) > 1:
+        if lang == "Czech" and len(files) > 1:
             file_name = "cs-ud-train" + file_ending
         else:
             file_name = files[0].split("/")[-1].split(".")[0] + file_ending
