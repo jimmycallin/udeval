@@ -1,0 +1,13 @@
+Training set path:/home/stp11/kanin/udeval/resources/universaldependencies1-2/universal-dependencies-1.2/UD_Ancient_Greek/grc-ud-train.coarse_deprels.conllx
+Size (tokens):585415
+Size (sentences):34586
+Non projective:12.48192910426184
+Dangling Punctuation:0
+LAS:80.68
+Default:78.87
+NumRootLabels:1
+JavaHeap:-Xmx10240m
+MaxTokens:2147483647
+CposEqPos:false
+LemmaBlank:false
+FeatsBlank:false
