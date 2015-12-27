@@ -1,4 +1,4 @@
-Training set path:/home/stp11/kanin/udeval/resources/universaldependencies1-2/universal-dependencies-1.2/UD_Dutch/nl-ud-train.coarse_deprels.conllx
+Training set path:/Users/jimmy/dev/edu/nlp-rod/udeval/resources/universaldependencies1-2/universal-dependencies-1.2/UD_Dutch/nl-ud-train.coarse_deprels.conllx
 Size (tokens):188882
 Size (sentences):13000
 Non projective:30.830769230769228
