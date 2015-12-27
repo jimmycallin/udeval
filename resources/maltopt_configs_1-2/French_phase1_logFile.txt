@@ -1,0 +1,13 @@
+Training set path:/home/stp11/kanin/udeval/resources/universaldependencies1-2/universal-dependencies-1.2/UD_French/fr-ud-train.coarse_deprels.conllx
+Size (tokens):355811
+Size (sentences):14552
+Non projective:12.479384277075315
+Dangling Punctuation:0
+LAS:83.38
+Default:83.38
+NumRootLabels:1
+JavaHeap:-Xmx6144m
+MaxTokens:2147483647
+CposEqPos:false
+LemmaBlank:true
+FeatsBlank:true

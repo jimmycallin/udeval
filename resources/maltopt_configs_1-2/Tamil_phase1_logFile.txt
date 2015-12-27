@@ -1,0 +1,13 @@
+Training set path:/home/stp11/kanin/udeval/resources/universaldependencies1-2/universal-dependencies-1.2/UD_Tamil/ta-ud-train.coarse_deprels.conllx
+Size (tokens):6329
+Size (sentences):400
+Non projective:2.5
+Dangling Punctuation:0
+LAS:71.18
+Default:71.18
+NumRootLabels:1
+JavaHeap:-Xmx2048m
+MaxTokens:2147483647
+CposEqPos:false
+LemmaBlank:false
+FeatsBlank:false
