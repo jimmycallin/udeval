@@ -1,0 +1,13 @@
+Training set path:/home/stp11/kanin/udeval/resources/universaldependencies1-2/universal-dependencies-1.2/UD_Romanian/ro-ud-train.coarse_deprels.conllx
+Size (tokens):9291
+Size (sentences):481
+Non projective:11.01871101871102
+Dangling Punctuation:0
+LAS:62.9
+Default:62.9
+NumRootLabels:1
+JavaHeap:-Xmx2048m
+MaxTokens:2147483647
+CposEqPos:false
+LemmaBlank:false
+FeatsBlank:false

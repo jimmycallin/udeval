@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<experiment>
+	<optioncontainer>
+		<optiongroup groupname="config">
+			<option name="name" value="langModel"/>
+			<option name="flowchart" value="learn"/>
+		</optiongroup>
+		<optiongroup groupname="singlemalt">
+			<option name="parsing_algorithm" value="stackproj"/>
+		</optiongroup>
+		<optiongroup groupname="input">
+			<option name="infile" value="/home/stp11/kanin/udeval/resources/universaldependencies1-2/universal-dependencies-1.2/UD_Latin-ITT/la_itt-ud-train.coarse_deprels.conllx"/>
+		</optiongroup>
+		<optiongroup groupname="graph">
+			<option name="root_label" value="ROOT"/>
+		</optiongroup>
+		<optiongroup groupname="pproj">
+			<option name="marking_strategy" value="head"/>
+			<option name="covered_root" value="none"/>
+		</optiongroup>
+		<optiongroup groupname="lib">
+			<option name="options" value="-s_4_-c_0.1"/>
+		</optiongroup>
+		<optiongroup groupname="guide">
+			<option name="learner" value="liblinear"/>
+		</optiongroup>
+	</optioncontainer>
+</experiment>
