@@ -21,6 +21,16 @@
 		<feature>InputColumn(FORM, Stack[0])</feature>
 		<feature>InputColumn(FORM, Stack[1])</feature>
 		<feature>InputColumn(FORM, Lookahead[0])</feature>
+		<feature>InputColumn(FORM, Lookahead[1])</feature>
+		<feature>InputColumn(CPOSTAG, Stack[0])</feature>
+		<feature>InputColumn(CPOSTAG, Stack[1])</feature>
+		<feature>InputColumn(LEMMA, Stack[0])</feature>
+		<feature>InputColumn(LEMMA, Stack[1])</feature>
+		<feature>Split(InputColumn(FEATS, Stack[0]),\|)</feature>
+		<feature>Split(InputColumn(FEATS, Lookahead[0]),\|)</feature>
+		<feature>Split(InputColumn(FEATS, Lookahead[1]),\|)</feature>
+		<feature>Split(InputColumn(FEATS, Stack[1]),\|)</feature>
+		<feature>InputColumn(FEATS, Stack[0])</feature>
 	</featuremodel>
 </featuremodels>
 

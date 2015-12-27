@@ -1,12 +1,12 @@
-Training set path:/Users/jimmy/dev/edu/nlp-rod/udeval/resources/universaldependencies1-2/universal-dependencies-1.2/UD_Czech/cs-ud-train.coarse_deprels.conllx
-Size (tokens):1173282
-Size (sentences):68495
-Non projective:12.491422731586248
+Training set path:/home/stp11/kanin/udeval/resources/universaldependencies1-2/universal-dependencies-1.2/UD_Czech/cs-ud-train.coarse_deprels.half.conllx
+Size (tokens):585415
+Size (sentences):34586
+Non projective:12.48192910426184
 Dangling Punctuation:0
-LAS:80.49
-Default:80.49
+LAS:78.87
+Default:78.87
 NumRootLabels:1
-JavaHeap:-Xmx20480m
+JavaHeap:-Xmx10240m
 MaxTokens:2147483647
 CposEqPos:false
 LemmaBlank:false
