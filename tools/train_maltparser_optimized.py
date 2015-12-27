@@ -11,9 +11,10 @@ from os import rename
 import lang_utils
 import smtplib
 
-treebank_base = "/home/stp11/kanin/udeval/resources/universaldependencies1-2/universal-dependencies-1.2/"
+treebank_base = "/Users/jimmy/dev/edu/nlp-rod/udeval/resources/universaldependencies1-2/universal-dependencies-1.2/"
 train_files = lang_utils.get_ud_paths(treebank_base, type_="train", format_="conllx", coarse=True)
-project_base = "/home/stp11/kanin/udeval/"
+train_files = {x: train_files[x] for x in train_files.keys() if x in {"Ancient_Greek", "Latin-ITT"}}
+project_base = "/Users/jimmy/dev/edu/nlp-rod/udeval/"
 
 maltparser_path = join(project_base, "tools",
                        "maltparser-1.8.1", "maltparser-1.8.1.jar")
@@ -36,9 +37,9 @@ def get_feature_model(filepath):
 
 
 def optimize_model(lang, train_file):
-    call(["java", "-jar", maltoptimizer_path, "-p", "1", "-m", maltparser_path, "-c", train_file, "-e", "las", "-s", "false"])
-    call(["java", "-jar", maltoptimizer_path, "-p", "2", "-m", maltparser_path, "-c", train_file, "-e", "las", "-s", "false"])
-    call(["java", "-jar", maltoptimizer_path, "-p", "3", "-m", maltparser_path, "-c", train_file, "-e", "las", "-s", "false"])
+    call(["java", "-jar", maltoptimizer_path, "-p", "1", "-c", train_file, "-e", "las", "-s", "false"])
+    call(["java", "-jar", maltoptimizer_path, "-p", "2", "-c", train_file, "-e", "las", "-s", "false"])
+    call(["java", "-jar", maltoptimizer_path, "-p", "3", "-c", train_file, "-e", "las", "-s", "false"])
     feature_model = get_feature_model("phase3_optFile.txt")
     rename("finalOptionsFile.xml", join(project_base, "resources", "maltopt_configs_1-2", lang + "_finalOptionsFile.xml"))
     rename("phase1_logFile.txt", join(project_base, "resources", "maltopt_configs_1-2", lang + "_phase1_logFile.txt"))
@@ -60,12 +61,6 @@ for lang, train_file in train_files.items():
 
     # Move model file to resources
     rename(model_path[1] + ".mco", join(project_base, "resources", "maltopt_models_1-2", model_path[1] + ".mco"))
-
-    s = smtplib.SMTP('localhost')
-    s.sendmail('kanin@stp.lingfil.uu.se', 'jimmy.callin@gmail.com', "Subject: {} done".format(lang))
-    s.quit()
-
-s.sendmail('kanin@stp.lingfil.uu.se', 'jimmy.callin@gmail.com', "Subject: ALL DONE")
 
 # java -jar MaltOptimizer.jar -p 1 -m ../maltparser-1.8.1/maltparser-1.8.1.jar -c /Users/jimmy/dev/edu/nlp-rod/udeval/resources/universaldependencies1-1/ud-treebanks-v1.1/UD_English/en-ud-train.conllx
 # java -jar maltparser-1.8.1.jar -c es-model -m learn -i ../../resources/universaldependencies1-1/ud-treebanks-v1.1/UD_Spanish/es-ud-dev.conllx
