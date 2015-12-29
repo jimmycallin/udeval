@@ -1,26 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <featuremodels>
-	<featuremodel name="stackprojective">
-		<feature>InputColumn(POSTAG, Stack[0])</feature>
-		<feature>InputColumn(POSTAG, Stack[1])</feature>
-		<feature>InputColumn(POSTAG, Stack[2])</feature>
-		<feature>InputColumn(POSTAG, Lookahead[0])</feature>
-		<feature>InputColumn(POSTAG, Lookahead[1])</feature>
-		<feature>InputColumn(POSTAG, Lookahead[2])</feature>
-		<feature>Merge(InputColumn(POSTAG, Stack[1]), InputColumn(POSTAG, Stack[0]))</feature>
-		<feature>Merge3(InputColumn(POSTAG, Stack[2]), InputColumn(POSTAG, Stack[1]), InputColumn(POSTAG, Stack[0]))</feature>
-		<feature>Merge3(InputColumn(POSTAG, Stack[1]), InputColumn(POSTAG, Stack[0]), InputColumn(POSTAG, Lookahead[0]))</feature>
-		<feature>Merge3(InputColumn(POSTAG, Stack[0]), InputColumn(POSTAG, Lookahead[0]), InputColumn(POSTAG, Lookahead[1]))</feature>
-		<feature>Merge3(InputColumn(POSTAG, Lookahead[0]), InputColumn(POSTAG, Lookahead[1]), InputColumn(POSTAG, Lookahead[2]))</feature>
-		<feature>OutputColumn(DEPREL, ldep(Stack[0]))</feature>
-		<feature>OutputColumn(DEPREL, rdep(Stack[0]))</feature>
-		<feature>OutputColumn(DEPREL, ldep(Stack[1]))</feature>
-		<feature>OutputColumn(DEPREL, rdep(Stack[1]))</feature>
-		<feature>Merge3(InputColumn(POSTAG, Stack[0]), OutputColumn(DEPREL, ldep(Stack[0])), OutputColumn(DEPREL, rdep(Stack[0])))</feature>
-		<feature>Merge3(InputColumn(POSTAG, Stack[1]), OutputColumn(DEPREL, ldep(Stack[1])), OutputColumn(DEPREL, rdep(Stack[1])))</feature>
-		<feature>InputColumn(FORM, Stack[0])</feature>
-		<feature>InputColumn(FORM, Stack[1])</feature>
-		<feature>InputColumn(FORM, Lookahead[0])</feature>
+	<featuremodel name="covnonproj">
+		<feature>InputColumn(POSTAG, Left[0])</feature>
+		<feature>InputColumn(POSTAG, Right[0])</feature>
+		<feature>InputColumn(POSTAG, Right[1])</feature>
+		<feature>InputColumn(POSTAG, Right[2])</feature>
+		<feature>InputColumn(POSTAG, Right[3])</feature>
+		<feature>InputColumn(POSTAG, Left[1])</feature>
+		<feature>InputColumn(POSTAG, RightContext[0])</feature>
+		<feature>Merge(InputColumn(POSTAG, Left[0]), InputColumn(POSTAG, Right[0]))</feature>
+		<feature>Merge3(InputColumn(POSTAG, Left[1]), InputColumn(POSTAG, Left[0]), InputColumn(POSTAG, Right[0]))</feature>
+		<feature>Merge3(InputColumn(POSTAG, Left[0]), InputColumn(POSTAG, Right[0]), InputColumn(POSTAG, Right[1]))</feature>
+		<feature>Merge3(InputColumn(POSTAG, Right[0]), InputColumn(POSTAG, Right[1]), InputColumn(POSTAG, Right[2]))</feature>
+		<feature>Merge3(InputColumn(POSTAG, Right[1]), InputColumn(POSTAG, Right[2]), InputColumn(POSTAG, Right[3]))</feature>
+		<feature>OutputColumn(DEPREL, Left[0])</feature>
+		<feature>OutputColumn(DEPREL, ldep(Left[0]))</feature>
+		<feature>OutputColumn(DEPREL, rdep(Left[0]))</feature>
+		<feature>OutputColumn(DEPREL, ldep(Right[0]))</feature>
+		<feature>OutputColumn(DEPREL, Right[0])</feature>
+		<feature>Merge3(InputColumn(POSTAG, Left[0]), OutputColumn(DEPREL, ldep(Left[0])), OutputColumn(DEPREL, rdep(Left[0])))</feature>
+		<feature>Merge(InputColumn(POSTAG, Left[0]), OutputColumn(DEPREL, Left[0]))</feature>
+		<feature>Merge(InputColumn(POSTAG, Right[0]), OutputColumn(DEPREL, ldep(Right[0])))</feature>
+		<feature>Merge(InputColumn(POSTAG, Right[0]), OutputColumn(DEPREL, Right[0]))</feature>
+		<feature>InputColumn(FORM, Left[0])</feature>
+		<feature>InputColumn(FORM, Left[1])</feature>
+		<feature>InputColumn(FORM, Left[2])</feature>
+		<feature>InputColumn(FORM, Right[0])</feature>
+		<feature>Merge(InputColumn(POSTAG, Left[0]), InputColumn(FORM, Right[0]))</feature>
+		<feature>Merge(InputColumn(POSTAG, Right[0]), InputColumn(FORM, Right[0]))</feature>
+		<feature>InputColumn(FORM, Right[1])</feature>
+		<feature>Merge(InputColumn(POSTAG, Left[0]), InputColumn(FORM, Right[1]))</feature>
+		<feature>InputColumn(FORM, head(Left[0]))</feature>
+		<feature>InputColumn(LEMMA, Right[0])</feature>
+		<feature>InputColumn(LEMMA, Right[1])</feature>
+		<feature>InputColumn(LEMMA, Left[0])</feature>
+		<feature>Split(InputColumn(FEATS, Right[0]),\|)</feature>
 	</featuremodel>
 </featuremodels>
-

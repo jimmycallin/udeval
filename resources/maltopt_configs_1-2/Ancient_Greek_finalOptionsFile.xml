@@ -6,16 +6,15 @@
 			<option name="flowchart" value="learn"/>
 		</optiongroup>
 		<optiongroup groupname="singlemalt">
-			<option name="parsing_algorithm" value="stackproj"/>
+			<option name="parsing_algorithm" value="covnonproj"/>
 		</optiongroup>
 		<optiongroup groupname="input">
-			<option name="infile" value="/home/stp11/kanin/udeval/resources/universaldependencies1-2/universal-dependencies-1.2/UD_Ancient_Greek/grc-ud-train.coarse_deprels.conllx"/>
+			<option name="infile" value="/Users/jimmy/dev/edu/nlp-rod/udeval/resources/universaldependencies1-2/universal-dependencies-1.2/UD_Ancient_Greek/grc-ud-train.coarse_deprels.half.conllx"/>
 		</optiongroup>
 		<optiongroup groupname="graph">
 			<option name="root_label" value="ROOT"/>
 		</optiongroup>
 		<optiongroup groupname="pproj">
-			<option name="marking_strategy" value="head"/>
 			<option name="covered_root" value="none"/>
 		</optiongroup>
 		<optiongroup groupname="lib">
